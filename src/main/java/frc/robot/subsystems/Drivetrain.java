@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import frc.robot.Constants.DriveConstants;
@@ -29,6 +30,7 @@ public class Drivetrain extends SubsystemBase {
   final double kWheelRadiusInches = 3;
 
   public Drivetrain() {
+    brakeMode();
     FL.setInverted(true);
     FR.setInverted(false);
     RL.follow(FL);
@@ -36,6 +38,11 @@ public class Drivetrain extends SubsystemBase {
     zeroGyroscope();
   }
 
+  public Command brakeMode(){
+    FL.setNeutralMode(NeutralMode.Brake);
+    FR.setNeutralMode(NeutralMode.Brake);
+    return null;
+}
   public double leftDistance(){
     return (FL.getSelectedSensorPosition() + RL.getSelectedSensorPosition() / 2);
   }
@@ -44,7 +51,11 @@ public class Drivetrain extends SubsystemBase {
     return (FR.getSelectedSensorPosition() + RR.getSelectedSensorPosition() / 2);
   }
 
-  public double nativeUnitsToDistanceMeters(double sensorCounts){
+  public double totalDistance(){
+    return ( (encodertoMeter(leftDistance()) + encodertoMeter(rightDistance())) / 2);
+  }
+
+  public double encodertoMeter(double sensorCounts){
     double motorRotations = (double)sensorCounts / kCountsPerRev;
     double wheelRotations = motorRotations / kGearRatio;
     double positionMeters = wheelRotations * (2 * Math.PI * Units.inchesToMeters(kWheelRadiusInches));
@@ -66,10 +77,10 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     Shuffleboard.getTab("Drivetrain")
-    .add("Distance Left (M)", nativeUnitsToDistanceMeters(leftDistance()));
+    .add("Distance Left (M)", encodertoMeter(leftDistance()));
 
     Shuffleboard.getTab("Drivetrain")
-    .add("Distance Right (M)", nativeUnitsToDistanceMeters(rightDistance()));
+    .add("Distance Right (M)", encodertoMeter(rightDistance()));
   }
 }
 
