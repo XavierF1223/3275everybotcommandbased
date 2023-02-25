@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 import frc.robot.Constants.ArmConstants;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -27,9 +27,13 @@ public class Arm extends SubsystemBase {
     armFx.set(ControlMode.PercentOutput, speed);
   }
 
+  public void stop(){
+    armFx.set(ControlMode.PercentOutput, 0);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    Shuffleboard.getTab("Arm").add("Arm Encoder Value", getEncoderRevs());
+    SmartDashboard.putNumber("Arm Encoder Value", getEncoderRevs());
   }
 }

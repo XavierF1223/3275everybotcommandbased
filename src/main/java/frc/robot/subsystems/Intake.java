@@ -15,13 +15,15 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
     intakeFx.configFactoryDefault();
-    intakeFx.setNeutralMode(NeutralMode.Coast);
+    intakeFx.setNeutralMode(NeutralMode.Brake);
   }
 
-  public static void setMotor(double speed){
+  public void setMotor(double speed){
     intakeFx.set(ControlMode.PercentOutput, speed);
   }
-
+  public void stop(){
+    intakeFx.set(ControlMode.PercentOutput, 0);
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

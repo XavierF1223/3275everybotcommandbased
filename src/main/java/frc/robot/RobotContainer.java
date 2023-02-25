@@ -4,9 +4,13 @@
 
 package frc.robot;
 
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.*;
+import frc.robot.commands.ArcadeDrive;
+import frc.robot.commands.ArmManual;
+import frc.robot.commands.DriveDistance;
+import frc.robot.commands.IntakeCone;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -23,8 +27,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
+
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final Drivetrain m_Drivetrain = new Drivetrain();
+  private final Intake m_Intake = new Intake();
+  private final Arm m_Arm = new Arm();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final XboxController m_driverController =
@@ -32,8 +40,11 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the trigger bindings
-    configureBindings();
+   m_Drivetrain.setDefaultCommand(new ArcadeDrive(m_Drivetrain, 
+   () -> -m_driverController.getRawAxis(1), 
+   () -> m_driverController.getRawAxis(4)));
+
+   configureBindings();
   }
 
   /**
@@ -53,8 +64,11 @@ public class RobotContainer {
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     */
-    new JoystickButton(m_driverController, 1).onTrue(new InstantCommand(() -> Intake.setMotor(IntakeConstants.intakePower)));
-   
+    new JoystickButton(m_driverController, 4).whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePower1));
+    new JoystickButton(m_driverController, 3).whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePower2));
+    //new JoystickButton(m_driverController, 6).onTrue(new DriveDistance(m_Drivetrain, 1));
+    new JoystickButton(m_driverController, 5).whileTrue(new ArmManual(m_Arm, ArmConstants.armPower));
+    new JoystickButton(m_driverController, 6).whileTrue(new ArmManual(m_Arm, -ArmConstants.armPower));
   }
 
 

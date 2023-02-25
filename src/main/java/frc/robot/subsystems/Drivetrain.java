@@ -11,7 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.util.Units;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -30,10 +30,12 @@ public class Drivetrain extends SubsystemBase {
   final double kWheelRadiusInches = 3;
 
   public Drivetrain() {
-
+    factResetDrive();
     brakeMode();
-    FL.setInverted(true);
+    FL.setInverted(false);
+    RL.setInverted(false);
     FR.setInverted(false);
+    RR.setInverted(false);
     RL.follow(FL);
     RR.follow(FR);
     zeroGyroscope();
@@ -84,20 +86,23 @@ public class Drivetrain extends SubsystemBase {
   public void setMotors(double left, double right){
     FL.set(ControlMode.PercentOutput, left);
     FR.set(ControlMode.PercentOutput, -right);
+    SmartDashboard.putNumber("leftout", left);
+    SmartDashboard.putNumber("rightout", right);
+
+
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    Shuffleboard.getTab("Drivetrain")
-    .add("Distance Left (M)", encodertoMeter(leftDistance()));
+    SmartDashboard.putNumber("Distance Left", encodertoMeter(leftDistance()));
+    SmartDashboard.putNumber("Distance Right", encodertoMeter(rightDistance()));
+    SmartDashboard.putNumber("Total Distance", encodertoMeter(totalDistance()));
 
-    Shuffleboard.getTab("Drivetrain")
-    .add("Distance Right (M)", encodertoMeter(rightDistance()));
-
-    Shuffleboard.getTab("Drivetain").add("gyro pitch", m_navx.getPitch());
-    Shuffleboard.getTab("Drivetain").add("gyro yaw", m_navx.getYaw());
-    Shuffleboard.getTab("Drivetain").add("gyro roll", m_navx.getRoll());
+    
+    SmartDashboard.putNumber("gyro pitch", m_navx.getPitch());
+    SmartDashboard.putNumber("gyro yaw", m_navx.getYaw());
+    SmartDashboard.putNumber("gyro roll", m_navx.getRoll());
   }
 }
 

@@ -13,6 +13,7 @@ import frc.robot.Constants.DriveConstants;
 public class ArcadeDrive extends CommandBase {
   private final Drivetrain drive;
   private final Supplier<Double> xSpeed, zRotation;
+  //private final double xSpeed, zRotation;
   /** Creates a new ArcadeDrive. */
   public ArcadeDrive(Drivetrain drive, Supplier<Double> xSpeed, Supplier<Double> zRotation) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -32,7 +33,8 @@ public class ArcadeDrive extends CommandBase {
     // grabbing the controller values
     double realTimeSpeed = xSpeed.get();
     double realTimeTurn = zRotation.get();
-
+    //double realTimeSpeed = xSpeed;
+    //double realTimeTurn = zRotation;
     // drivespeed maths here instead of in the controller spot
     realTimeSpeed = MathUtil.applyDeadband(realTimeSpeed, DriveConstants.Deadband);
     realTimeSpeed = (realTimeSpeed * DriveConstants.MaxDriveOutput);
@@ -42,7 +44,7 @@ public class ArcadeDrive extends CommandBase {
 
     // finalizing
     double left = realTimeSpeed + realTimeTurn;
-    double right = realTimeSpeed - realTimeSpeed;
+    double right = realTimeSpeed - realTimeTurn;
 
     drive.setMotors(left, right);
 

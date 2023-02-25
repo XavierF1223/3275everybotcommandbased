@@ -19,10 +19,10 @@ public final class Constants {
   }
 
 public static class DriveConstants {
-  public static final int FL = 0;
-  public static final int FR = 1;
-  public static final int RL = 2;
-  public static final int RR = 3;
+  public static final int FL = 52;
+  public static final int FR = 50;
+  public static final int RL = 53;
+  public static final int RR = 51;
   public static final double Deadband = 0.1;
   public static final double MaxDriveOutput = 0.9;
   public static final double MaxTurnOutput = 0.9;
@@ -33,13 +33,21 @@ public static class DriveConstants {
 
 public static class ArmConstants {
   public static final int ArmMotor = 5;
-  public static final double armPower = 0.5;
+  public static final double armPower = 0.15;
+  public static final double armFF = -0.05;
+  public static final double armP = 0.004;
+  public static final double armI = 0;
+  public static final double armD = 0;
+  public static final double armTol = 0.004;
+  public static final double armSet1 = 10;
+  public static final double armSet2 = 20;
 
 }
 
 public static class IntakeConstants {
   public static final int IntakeMotor = 6;
-  public static final double intakePower = 0.5;
+  public static final double intakePower1 = 0.9;
+  public static final double intakePower2 = 0.65;
 
 }
 }
