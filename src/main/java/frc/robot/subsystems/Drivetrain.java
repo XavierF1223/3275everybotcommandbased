@@ -30,6 +30,7 @@ public class Drivetrain extends SubsystemBase {
   final double kWheelRadiusInches = 3;
 
   public Drivetrain() {
+
     brakeMode();
     FL.setInverted(true);
     FR.setInverted(false);
@@ -41,8 +42,19 @@ public class Drivetrain extends SubsystemBase {
   public Command brakeMode(){
     FL.setNeutralMode(NeutralMode.Brake);
     FR.setNeutralMode(NeutralMode.Brake);
+    System.out.println("Drive Motors in Brake Mode!");
     return null;
 }
+
+  public Command factResetDrive(){
+    FL.configFactoryDefault();
+    FR.configFactoryDefault();
+    RL.configFactoryDefault();
+    RR.configFactoryDefault();
+    System.out.println("Drive Motors Reset!");
+    return null;
+  }
+
   public double leftDistance(){
     return (FL.getSelectedSensorPosition() + RL.getSelectedSensorPosition() / 2);
   }
@@ -65,6 +77,7 @@ public class Drivetrain extends SubsystemBase {
   public Command zeroGyroscope() {
     m_navx.zeroYaw();
     m_navx.setAngleAdjustment(DriveConstants.Front_Angle_Offset);
+    System.out.println("Gyroscope Zeroed!");
     return null;
   }
 
@@ -81,6 +94,10 @@ public class Drivetrain extends SubsystemBase {
 
     Shuffleboard.getTab("Drivetrain")
     .add("Distance Right (M)", encodertoMeter(rightDistance()));
+
+    Shuffleboard.getTab("Drivetain").add("gyro pitch", m_navx.getPitch());
+    Shuffleboard.getTab("Drivetain").add("gyro yaw", m_navx.getYaw());
+    Shuffleboard.getTab("Drivetain").add("gyro roll", m_navx.getRoll());
   }
 }
 

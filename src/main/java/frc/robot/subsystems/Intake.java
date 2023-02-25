@@ -11,13 +11,14 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 public class Intake extends SubsystemBase {
-  TalonFX intakeFx = new TalonFX(IntakeConstants.IntakeMotor);
+  static TalonFX intakeFx = new TalonFX(IntakeConstants.IntakeMotor);
 
   public Intake() {
+    intakeFx.configFactoryDefault();
     intakeFx.setNeutralMode(NeutralMode.Coast);
   }
 
-  public void setMotor(double speed){
+  public static void setMotor(double speed){
     intakeFx.set(ControlMode.PercentOutput, speed);
   }
 

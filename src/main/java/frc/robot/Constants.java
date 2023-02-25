@@ -33,11 +33,13 @@ public static class DriveConstants {
 
 public static class ArmConstants {
   public static final int ArmMotor = 5;
+  public static final double armPower = 0.5;
 
 }
 
 public static class IntakeConstants {
   public static final int IntakeMotor = 6;
+  public static final double intakePower = 0.5;
 
 }
 }

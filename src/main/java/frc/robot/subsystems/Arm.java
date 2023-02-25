@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 import frc.robot.Constants.ArmConstants;
-
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -14,6 +14,7 @@ public class Arm extends SubsystemBase {
   TalonFX armFx = new TalonFX(ArmConstants.ArmMotor);
   /** Creates a new Arm. */
   public Arm() {
+    armFx.configFactoryDefault();
     armFx.setNeutralMode(NeutralMode.Brake);
   }
 
@@ -29,5 +30,6 @@ public class Arm extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    Shuffleboard.getTab("Arm").add("Arm Encoder Value", getEncoderRevs());
   }
 }
