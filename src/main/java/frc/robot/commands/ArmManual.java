@@ -8,15 +8,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Arm;
 
 public class ArmManual extends CommandBase {
-  private final Arm arm;
+  private final Arm m_Arm;
   private final double speed;
 
   /** Creates a new ArmManual. */
-  public ArmManual(Arm arm, double speed) {
+  public ArmManual(Arm m_Arm, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.arm = arm;
+    this.m_Arm = m_Arm;
     this.speed = speed;
-    addRequirements(arm);
+    addRequirements(m_Arm);
   }
 
   // Called when the command is initially scheduled.
@@ -26,13 +26,13 @@ public class ArmManual extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    arm.setMotor(speed);
+    m_Arm.setMotor(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    arm.setMotor(0);
+    m_Arm.setMotor(0);
   }
 
   // Returns true when the command should end.
