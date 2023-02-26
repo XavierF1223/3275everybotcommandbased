@@ -87,7 +87,6 @@ public class RobotContainer {
     //ARM MOVEMENT PID CONTROLLED (IDK IF WORKS YET)---------------------
     new JoystickButton(m_driverController, Button.kStart.value)
     .whileTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal)); //JUST STARTING WITH MID GOAL EXPERIMENTATION
-
   }
 
 
