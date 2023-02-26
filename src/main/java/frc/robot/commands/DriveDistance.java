@@ -33,6 +33,7 @@ public class DriveDistance extends CommandBase {
   public void execute() {
     drive.setMotors(DriveConstants.driveDistSpd , DriveConstants.driveDistSpd);
     SmartDashboard.putNumber("encoder total distance", drive.totalDistance());
+    SmartDashboard.putNumber("encoder setpoint distance", encoderSetpoint);
   }
 
   // Called once the command ends or is interrupted.

@@ -51,6 +51,7 @@ public class PIDArm extends CommandBase {
     speed = (speed < -1 ) ? -1 : speed; 
     m_Arm.setMotor(speed * ArmConstants.armPower);
     SmartDashboard.putNumber("Arm Output:", speed);
+    SmartDashboard.putNumber("Arm Setpoint:", setpoint);
   }
 
   // Called once the command ends or is interrupted.
