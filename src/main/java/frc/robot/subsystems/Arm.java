@@ -11,24 +11,31 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 public class Arm extends SubsystemBase {
-  TalonFX armFx = new TalonFX(ArmConstants.ArmMotor);
+  TalonFX armFx1 = new TalonFX(ArmConstants.ArmMotorLeft);
+  TalonFX armFx2 = new TalonFX(ArmConstants.ArmMotorRight);
   /** Creates a new Arm. */
   public Arm() {
-    armFx.configFactoryDefault();
-    armFx.setNeutralMode(NeutralMode.Brake);
+    armFx1.configFactoryDefault();
+    armFx2.configFactoryDefault();
+    armFx1.setNeutralMode(NeutralMode.Brake);
+    armFx2.setNeutralMode(NeutralMode.Brake);
+    armFx2.follow(armFx1);
+
   }
 
   public double getEncoderRevs(){
-    // 2048 ticks per revolution of shaft, shaft on 75:1 gearbox
-    return armFx.getSelectedSensorPosition() /2048 /75;
+    // 2048 ticks per revolution of shaft, shaft on 60:1 gearbox, average of BOTH motors
+    return ( (Math.abs(armFx1.getSelectedSensorPosition()) + 
+              Math.abs(armFx2.getSelectedSensorPosition())) /2
+              /2048 /60 );
   }
 
   public void setMotor(double speed){
-    armFx.set(ControlMode.PercentOutput, speed);
+    armFx1.set(ControlMode.PercentOutput, speed);
   }
 
   public void stop(){
-    armFx.set(ControlMode.PercentOutput, 0);
+    armFx1.set(ControlMode.PercentOutput, 0);
   }
 
   @Override

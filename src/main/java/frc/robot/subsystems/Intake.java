@@ -8,21 +8,21 @@ import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class Intake extends SubsystemBase {
-  static TalonFX intakeFx = new TalonFX(IntakeConstants.IntakeMotor);
+  static TalonSRX intakeSRX = new TalonSRX(IntakeConstants.IntakeMotor);
 
   public Intake() {
-    intakeFx.configFactoryDefault();
-    intakeFx.setNeutralMode(NeutralMode.Brake);
+    intakeSRX.configFactoryDefault();
+    intakeSRX.setNeutralMode(NeutralMode.Brake);
   }
 
   public void setMotor(double speed){
-    intakeFx.set(ControlMode.PercentOutput, speed);
+    intakeSRX.set(ControlMode.PercentOutput, speed);
   }
   public void stop(){
-    intakeFx.set(ControlMode.PercentOutput, 0);
+    intakeSRX.set(ControlMode.PercentOutput, 0);
   }
   @Override
   public void periodic() {

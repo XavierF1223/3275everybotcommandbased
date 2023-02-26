@@ -63,6 +63,7 @@ public class PIDArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    //Try return Math.abs(drive.totalDistance()) >= encoderSetpoint; if it doesnt work
     if (m_ArmPidController.atSetpoint())
       return true;
     else

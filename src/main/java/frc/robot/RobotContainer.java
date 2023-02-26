@@ -12,6 +12,7 @@ import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.ArmManual;
 import frc.robot.commands.DriveDistance;
 import frc.robot.commands.IntakeCone;
+import frc.robot.commands.PIDArm;
 import frc.robot.commands.SlowDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
@@ -75,14 +76,18 @@ public class RobotContainer {
 
     //INTAKE MOVEMENT----------------------------------------------------
     new JoystickButton(m_driverController, Button.kY.value)
-    .whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePower1));
+    .whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerConeIn));
     new JoystickButton(m_driverController, Button.kX.value)
-    .whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePower2));
-    //ARM MOVEMENT-------------------------------------------------------
+    .whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerConeIn));
+    //ARM MOVEMENT MANUAL------------------------------------------------
     new JoystickButton(m_driverController, Button.kLeftBumper.value)
     .whileTrue(new ArmManual(m_Arm, ArmConstants.armPower));
     new JoystickButton(m_driverController, Button.kRightBumper.value)
     .whileTrue(new ArmManual(m_Arm, -ArmConstants.armPower));
+    //ARM MOVEMENT PID CONTROLLED (IDK IF WORKS YET)---------------------
+    new JoystickButton(m_driverController, Button.kStart.value)
+    .whileTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal)); //JUST STARTING WITH MID GOAL EXPERIMENTATION
+
   }
 
 
@@ -95,6 +100,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return m_chooser.getSelected(); 
+    
   }
   
 }

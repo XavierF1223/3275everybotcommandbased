@@ -68,9 +68,10 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double totalDistance(){
-    return ( (encodertoMeter(leftDistance()) + encodertoMeter(rightDistance())) / 2);
+    return ( (Math.abs(encodertoMeter(leftDistance())) + Math.abs(encodertoMeter(rightDistance()))) / 2); //MAKE SURE THIS RETURNS A POSITIVE VALUE ALWAYS
   }
 
+  /**FALCON 500 ENCODER TO METERS*/
   public double encodertoMeter(double sensorCounts){
     double motorRotations = (double)sensorCounts / kCountsPerRev;
     double wheelRotations = motorRotations / kGearRatio;
@@ -97,11 +98,11 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    //SMARTDASHBOARD DEBUG INFO
     SmartDashboard.putNumber("Distance Left", encodertoMeter(leftDistance()));
     SmartDashboard.putNumber("Distance Right", encodertoMeter(rightDistance()));
     SmartDashboard.putNumber("Total Distance", encodertoMeter(totalDistance()));
-
-    
     SmartDashboard.putNumber("gyro pitch", m_navx.getPitch());
     SmartDashboard.putNumber("gyro yaw", m_navx.getYaw());
     SmartDashboard.putNumber("gyro roll", m_navx.getRoll());

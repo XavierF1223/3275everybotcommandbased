@@ -19,35 +19,45 @@ public final class Constants {
   }
 
 public static class DriveConstants {
+  //MOTOR CAN IDS
   public static final int FL = 52;
   public static final int FR = 50;
   public static final int RL = 53;
   public static final int RR = 51;
+  //DRIVE CONSTANTS
   public static final double Deadband = 0.1;
   public static double MaxDriveOutput = 0.9;
   public static double MaxTurnOutput = 0.9;
+  //MISC DRIVEBASE CONSTANTS
   public static final int Front_Angle_Offset = 0;
   public static final double driveDistSpd = 0.15;
 
 }
 
 public static class ArmConstants {
-  public static final int ArmMotor = 5;
+  //MOTOR CAN ID
+  public static final int ArmMotorLeft = 5;
+  public static final int ArmMotorRight = 7;
+  //ARM MOTOR OUTPUT IN PERCENTOUTPUT
   public static final double armPower = 0.15;
+  //ARM PID CONSTANTS
   public static final double armFF = -0.05;
   public static final double armP = 0.004;
   public static final double armI = 0;
   public static final double armD = 0;
   public static final double armTol = 0.004;
-  public static final double armSet1 = 10;
-  public static final double armSet2 = 20;
+  public static final double armSetStowed = 5;
+  public static final double armSetMidGoal = 10;
+  public static final double armSetTopGoal = 15;
 
 }
 
 public static class IntakeConstants {
+  //MOTOR CAN ID
   public static final int IntakeMotor = 6;
-  public static final double intakePower1 = 0.9;
-  public static final double intakePower2 = 0.65;
+  //MOTOR INTAKE POWERS
+  public static final double intakePowerConeIn = 0.9;
+  public static final double intakePowerCubeIn = 0.65;
 
 }
 

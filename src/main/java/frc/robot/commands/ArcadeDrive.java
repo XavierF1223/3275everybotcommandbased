@@ -11,17 +11,17 @@ import frc.robot.Constants.DriveConstants;
 
 
 public class ArcadeDrive extends CommandBase {
-  private final Drivetrain drive;
+  private final Drivetrain m_Drive;
   private final Supplier<Double> xSpeed, zRotation;
   public double MaxDriveOutput;
   //private final double xSpeed, zRotation;
   /** Creates a new ArcadeDrive. */
-  public ArcadeDrive(Drivetrain drive, Supplier<Double> xSpeed, Supplier<Double> zRotation) {
+  public ArcadeDrive(Drivetrain m_Drive, Supplier<Double> xSpeed, Supplier<Double> zRotation) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.drive = drive;
+    this.m_Drive = m_Drive;
     this.xSpeed = xSpeed;
     this.zRotation = zRotation;
-    addRequirements(drive);
+    addRequirements(m_Drive);
   }
 
   // Called when the command is initially scheduled.
@@ -49,13 +49,15 @@ public class ArcadeDrive extends CommandBase {
     double left = realTimeSpeed + realTimeTurn;
     double right = realTimeSpeed - realTimeTurn;
 
-    drive.setMotors(left, right);
+    m_Drive.setMotors(left, right);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_Drive.setMotors(0, 0);
+  }
 
   // Returns true when the command should end.
   @Override

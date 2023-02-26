@@ -11,41 +11,41 @@ import frc.robot.subsystems.Drivetrain;
 
 public class DriveDistance extends CommandBase {
 
-  private final Drivetrain drive;
+  private final Drivetrain m_Drive;
   private final double distance;
   private double encoderSetpoint;
 
-  public DriveDistance(Drivetrain drive, double distance) {
-    this.drive = drive;
+  public DriveDistance(Drivetrain m_Drive, double distance) {
+    this.m_Drive = m_Drive;
     this.distance = distance;
-    addRequirements(drive);
+    addRequirements(m_Drive);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    encoderSetpoint = drive.totalDistance() + distance;
+    encoderSetpoint = m_Drive.totalDistance() + distance;
     System.out.println("DriveDistance started!");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drive.setMotors(DriveConstants.driveDistSpd , DriveConstants.driveDistSpd);
-    SmartDashboard.putNumber("encoder total distance", drive.totalDistance());
+    m_Drive.setMotors(DriveConstants.driveDistSpd , DriveConstants.driveDistSpd);
+    SmartDashboard.putNumber("encoder total distance", m_Drive.totalDistance());
     SmartDashboard.putNumber("encoder setpoint distance", encoderSetpoint);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drive.setMotors(0, 0);
+    m_Drive.setMotors(0, 0);
     System.out.println("DriveDistance ended!");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(drive.totalDistance()) >= encoderSetpoint;
+    return Math.abs(m_Drive.totalDistance()) >= encoderSetpoint;
   }
 }
