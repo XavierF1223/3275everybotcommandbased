@@ -17,6 +17,9 @@ import frc.robot.commands.SlowDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
+
+import com.ctre.phoenix.music.Orchestra;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -36,6 +39,7 @@ public class RobotContainer {
   private final Drivetrain m_Drivetrain = new Drivetrain();
   private final Intake m_Intake = new Intake();
   private final Arm m_Arm = new Arm();
+  private final Orchestra m_Orchestra = new Orchestra();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final XboxController m_driverController =
@@ -43,6 +47,7 @@ public class RobotContainer {
 
   //AUTONOMOUS     
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+  SendableChooser<Command> m_songChooser = new SendableChooser<>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -56,6 +61,7 @@ public class RobotContainer {
   m_chooser.setDefaultOption("Nothing", null);
   m_chooser.addOption("Drive Distance", new DriveDistance(m_Drivetrain, AutoConstants.autoDistance));
 
+  m_songChooser.setDefaultOption("Nothing", null);
 
   }
 
@@ -87,6 +93,8 @@ public class RobotContainer {
     //ARM MOVEMENT PID CONTROLLED (IDK IF WORKS YET)---------------------
     new JoystickButton(m_driverController, Button.kStart.value)
     .whileTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal)); //JUST STARTING WITH MID GOAL EXPERIMENTATION
+
+    
   }
 
 
@@ -99,6 +107,12 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return m_chooser.getSelected(); 
+    
+  }
+
+  public Command getSong() {
+    // An example command will be run in autonomous
+    return m_songChooser.getSelected(); 
     
   }
   
