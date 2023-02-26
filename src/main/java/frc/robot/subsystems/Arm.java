@@ -19,8 +19,8 @@ public class Arm extends SubsystemBase {
   }
 
   public double getEncoderRevs(){
-    // 4096 ticks per revolution of shaft, shaft on 75:1 gearbox
-    return armFx.getSelectedSensorPosition() /4096 /75;
+    // 2048 ticks per revolution of shaft, shaft on 75:1 gearbox
+    return armFx.getSelectedSensorPosition() /2048 /75;
   }
 
   public void setMotor(double speed){

@@ -25,7 +25,7 @@ public class Drivetrain extends SubsystemBase {
   private TalonFX RR = new TalonFX(DriveConstants.RR);
   private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); // NavX connected over MXP
 
-  final int kCountsPerRev = 4096;  //Encoder counts per revolution of the motor shaft.
+  final int kCountsPerRev = 2048;  //Encoder counts per revolution of the motor shaft.
   final double kGearRatio = 10.71;
   final double kWheelRadiusInches = 3;
 
