@@ -13,6 +13,7 @@ import frc.robot.Constants.DriveConstants;
 public class ArcadeDrive extends CommandBase {
   private final Drivetrain drive;
   private final Supplier<Double> xSpeed, zRotation;
+  public double MaxDriveOutput;
   //private final double xSpeed, zRotation;
   /** Creates a new ArcadeDrive. */
   public ArcadeDrive(Drivetrain drive, Supplier<Double> xSpeed, Supplier<Double> zRotation) {
@@ -25,7 +26,8 @@ public class ArcadeDrive extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -38,6 +40,7 @@ public class ArcadeDrive extends CommandBase {
     // drivespeed maths here instead of in the controller spot
     realTimeSpeed = MathUtil.applyDeadband(realTimeSpeed, DriveConstants.Deadband);
     realTimeSpeed = (realTimeSpeed * DriveConstants.MaxDriveOutput);
+    
     // turnspeed maths here instead of in the controller spot
     realTimeTurn = MathUtil.applyDeadband(realTimeTurn, DriveConstants.Deadband);
     realTimeTurn = (realTimeTurn * DriveConstants.MaxTurnOutput);

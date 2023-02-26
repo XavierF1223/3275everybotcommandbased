@@ -24,10 +24,10 @@ public static class DriveConstants {
   public static final int RL = 53;
   public static final int RR = 51;
   public static final double Deadband = 0.1;
-  public static final double MaxDriveOutput = 0.9;
-  public static final double MaxTurnOutput = 0.9;
+  public static double MaxDriveOutput = 0.9;
+  public static double MaxTurnOutput = 0.9;
   public static final int Front_Angle_Offset = 0;
-  public static final double driveDistSpd = 0.5;
+  public static final double driveDistSpd = 0.15;
 
 }
 
@@ -49,5 +49,9 @@ public static class IntakeConstants {
   public static final double intakePower1 = 0.9;
   public static final double intakePower2 = 0.65;
 
+}
+
+public static class AutoConstants {
+  public static final double autoDistance = 1; //SET
 }
 }

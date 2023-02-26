@@ -29,6 +29,8 @@ public class Drivetrain extends SubsystemBase {
   final double kGearRatio = 10.71;
   final double kWheelRadiusInches = 3;
 
+  public static final double kDefaultMaxOutput = 1.0;
+
   public Drivetrain() {
     factResetDrive();
     brakeMode();
@@ -89,8 +91,8 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("leftout", left);
     SmartDashboard.putNumber("rightout", right);
 
-
   }
+
 
   @Override
   public void periodic() {
