@@ -10,7 +10,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.util.Units;
 
@@ -33,7 +32,7 @@ public class Drivetrain extends SubsystemBase {
 
   public Drivetrain() {
     factResetDrive();
-    brakeMode();
+    neutralMode(NeutralMode.Brake);
     FL.setInverted(false);
     RL.setInverted(false);
     FR.setInverted(false);
@@ -43,20 +42,18 @@ public class Drivetrain extends SubsystemBase {
     zeroGyroscope();
   }
 
-  public Command brakeMode(){
-    FL.setNeutralMode(NeutralMode.Brake);
-    FR.setNeutralMode(NeutralMode.Brake);
-    System.out.println("Drive Motors in Brake Mode!");
-    return null;
+  public void neutralMode(NeutralMode mode){
+    FL.setNeutralMode(mode);
+    FR.setNeutralMode(mode);
+    System.out.println("Drive Motors in " + mode + " Mode!");
 }
 
-  public Command factResetDrive(){
+  public void factResetDrive(){
     FL.configFactoryDefault();
     FR.configFactoryDefault();
     RL.configFactoryDefault();
     RR.configFactoryDefault();
     System.out.println("Drive Motors Reset!");
-    return null;
   }
 
   public double leftDistance(){
@@ -66,7 +63,7 @@ public class Drivetrain extends SubsystemBase {
   public double rightDistance(){
     return (FR.getSelectedSensorPosition() + RR.getSelectedSensorPosition() / 2);
   }
-
+  /** Averages BOTH sides of Drivetrain into a distance (meters) */
   public double totalDistance(){
     return ( (Math.abs(encodertoMeter(leftDistance())) + Math.abs(encodertoMeter(rightDistance()))) / 2); //MAKE SURE THIS RETURNS A POSITIVE VALUE ALWAYS
   }
@@ -79,11 +76,10 @@ public class Drivetrain extends SubsystemBase {
     return positionMeters;
   }
 
-  public Command zeroGyroscope() {
+  public void zeroGyroscope() {
     m_navx.zeroYaw();
     m_navx.setAngleAdjustment(DriveConstants.Front_Angle_Offset);
     System.out.println("Gyroscope Zeroed!");
-    return null;
   }
 
   public void setMotors(double left, double right){
