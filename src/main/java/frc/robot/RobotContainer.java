@@ -17,8 +17,8 @@ import frc.robot.commands.SlowDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
+//import frc.robot.subsystems.OrchestraSub;
 
-import com.ctre.phoenix.music.Orchestra;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -39,7 +39,7 @@ public class RobotContainer {
   private final Drivetrain m_Drivetrain = new Drivetrain();
   private final Intake m_Intake = new Intake();
   private final Arm m_Arm = new Arm();
-  private final Orchestra m_Orchestra = new Orchestra();
+  //private final OrchestraSub m_Orchestra = new OrchestraSub();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final XboxController m_driverController =
@@ -47,7 +47,7 @@ public class RobotContainer {
 
   //AUTONOMOUS     
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-  SendableChooser<Command> m_songChooser = new SendableChooser<>();
+  SendableChooser<String> m_songChooser = new SendableChooser<>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -61,9 +61,12 @@ public class RobotContainer {
   m_chooser.setDefaultOption("Nothing", null);
   m_chooser.addOption("Drive Distance", new DriveDistance(m_Drivetrain, AutoConstants.autoDistance));
 
-  m_songChooser.setDefaultOption("Nothing", null);
-
+  m_songChooser.setDefaultOption("Nothing", "");
+  m_songChooser.addOption("doom.chrp", "doom.chrp");
+  //m_Orchestra.LoadMusicSelection(getSong());
   }
+
+  
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -79,7 +82,6 @@ public class RobotContainer {
     //new JoystickButton(m_driverController, 6).onTrue(new DriveDistance(m_Drivetrain, 1));
     new Trigger(()->{ if(m_driverController.getLeftTriggerAxis() > 0)
     return true;else{return false;}}).whileTrue(new SlowDrive());
-
     //INTAKE MOVEMENT----------------------------------------------------
     new JoystickButton(m_driverController, Button.kY.value)
     .whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerConeIn));
@@ -110,9 +112,9 @@ public class RobotContainer {
     
   }
 
-  public Command getSong() {
+  public String getSong() {
     // An example command will be run in autonomous
-    return m_songChooser.getSelected(); 
+    return m_songChooser.toString();
     
   }
   
