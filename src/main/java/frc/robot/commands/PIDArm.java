@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -49,7 +50,7 @@ public class PIDArm extends CommandBase {
     speed = (speed > 0) ? speed + feedforward : speed - feedforward;
     speed = (speed > 1 ) ? 1.0 : speed;
     speed = (speed < -1 ) ? -1 : speed; 
-    m_Arm.setMotor(speed * ArmConstants.armPower);
+    m_Arm.setMotor(MathUtil.clamp(speed, -0.25, 0.25));
     SmartDashboard.putNumber("Arm Output:", speed);
     SmartDashboard.putNumber("Arm Setpoint:", setpoint);
   }
@@ -65,7 +66,6 @@ public class PIDArm extends CommandBase {
   public boolean isFinished() {
     if (m_ArmPidController.atSetpoint())
       return true;
-    else
-      return false;
+    return false;
   }
 }
