@@ -41,14 +41,15 @@ public static class ArmConstants {
   //ARM MOTOR OUTPUT IN PERCENTOUTPUT
   public static final double armPower = 0.15;
   //ARM PID CONSTANTS
-  public static final double armFF = 0.1;
-  public static final double armP = 0.6;
+  public static final double armFF = 0;
+  public static final double armP = 0.00005;
+  public static final double armP2 = 0.00007;
   public static final double armI = 0;
   public static final double armD = 0;
   public static final double armTol = 0.01;
-  public static final double armSetStowed = 0.25;
-  public static final double armSetMidGoal = 0;
-  public static final double armSetTopGoal = -0.25;
+  public static final int armSetStowed = -1024;//close to 0
+  public static final int armSetMidGoal = -30000;
+  public static final int armSetTopGoal = -53000;
 
 }
 

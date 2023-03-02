@@ -20,14 +20,14 @@ public class Arm extends SubsystemBase {
     armFx1.setNeutralMode(NeutralMode.Brake);
     armFx2.setNeutralMode(NeutralMode.Brake);
     armFx2.follow(armFx1);
+    armFx2.setInverted(true);
 
   }
 
   public double getEncoderRevs(){
     // 2048 ticks per revolution of shaft, shaft on 60:1 gearbox, average of BOTH motors
-    return ( (Math.abs(armFx1.getSelectedSensorPosition()) + 
-              Math.abs(armFx2.getSelectedSensorPosition())) /2
-              /2048 /60 );
+    return (armFx1.getSelectedSensorPosition() + 
+              armFx2.getSelectedSensorPosition()) /2;
   }
 
   public void setMotor(double speed){

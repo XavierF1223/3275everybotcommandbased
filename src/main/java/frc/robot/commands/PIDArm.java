@@ -16,14 +16,16 @@ public class PIDArm extends CommandBase {
   private PIDController m_ArmPidController;
   private final Arm m_Arm;
   private double setpoint;
+  private double P;
 
-  public PIDArm(Arm m_Arm, double setpoint) {
+  public PIDArm(Arm m_Arm, double setpoint, double P) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_Arm = m_Arm;
     this.setpoint = setpoint;
+    this.P = P;
 
     m_ArmPidController = new PIDController(
-      ArmConstants.armP, 
+      P, 
       ArmConstants.armI, 
       ArmConstants.armD);
 

@@ -94,11 +94,11 @@ public class RobotContainer {
     .whileTrue(new ArmManual(m_Arm, -ArmConstants.armPower));
     //ARM MOVEMENT PID CONTROLLED (IDK IF WORKS YET)---------------------
     new JoystickButton(m_driverController, Button.kStart.value)
-    .onTrue(new PIDArm(m_Arm, ArmConstants.armSetStowed)); //JUST STARTING WITH MID GOAL EXPERIMENTATION
-    new JoystickButton(m_driverController, Button.kStart.value)
-    .onTrue(new PIDArm(m_Arm, ArmConstants.armSetTopGoal));
+    .onTrue(new PIDArm(m_Arm, ArmConstants.armSetStowed, ArmConstants.armP)); //JUST STARTING WITH MID GOAL EXPERIMENTATION
+    new JoystickButton(m_driverController, Button.kBack.value)
+    .onTrue(new PIDArm(m_Arm, ArmConstants.armSetTopGoal, ArmConstants.armP2));
     new JoystickButton(m_driverController, Button.kA.value)
-    .onTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal));
+    .onTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal, ArmConstants.armP));
     
   }
 
