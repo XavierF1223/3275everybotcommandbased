@@ -59,6 +59,7 @@ public static class IntakeConstants {
   //MOTOR INTAKE POWERS
   public static final double intakePowerConeIn = 0.9;
   public static final double intakePowerCubeIn = 0.65;
+  public static final double holdPower = 0.25;
 
 }
 
