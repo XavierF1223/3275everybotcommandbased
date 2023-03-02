@@ -4,28 +4,15 @@
 
 package frc.robot;
 
-import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.ArmManual;
-import frc.robot.commands.DriveDistance;
-import frc.robot.commands.IntakeCone;
-import frc.robot.commands.PIDArm;
-import frc.robot.commands.SlowDrive;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
-//import frc.robot.subsystems.OrchestraSub;
-
+import frc.robot.Constants.*;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-//import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -53,6 +40,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     configureBindings();
+
   //DRIVETRAIN DEFAULT--------------------------------------------
    m_Drivetrain.setDefaultCommand(new ArcadeDrive(m_Drivetrain, 
    () -> -m_driverController.getRawAxis(1), 
@@ -61,9 +49,12 @@ public class RobotContainer {
   //AUTOS
   m_chooser.setDefaultOption("Nothing", null);
   m_chooser.addOption("Drive Distance", new DriveDistance(m_Drivetrain, AutoConstants.autoDistance));
+  SmartDashboard.putData("Autonomous",m_chooser);
 
+  //SONGS
   m_songChooser.setDefaultOption("Nothing", "");
   m_songChooser.addOption("doom.chrp", "doom.chrp");
+  SmartDashboard.putData("Song", m_songChooser);
   //m_Orchestra.LoadMusicSelection(getSong());
   }
 

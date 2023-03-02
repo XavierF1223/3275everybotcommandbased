@@ -87,11 +87,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+    // Cancels all running commands at the start of test mode.
+    CommandScheduler.getInstance().cancelAll();
+
     Song = m_robotContainer.getSong();
     m_Orchestra.LoadMusicSelection(Song);
     m_Orchestra.play();
-    // Cancels all running commands at the start of test mode.
-    CommandScheduler.getInstance().cancelAll();
     
   }
 
