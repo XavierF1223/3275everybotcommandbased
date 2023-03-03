@@ -84,9 +84,9 @@ public class RobotContainer {
     return true;else{return false;}}).whileTrue(new SlowDrive());
     //INTAKE MOVEMENT----------------------------------------------------
     new JoystickButton(m_driverController, Button.kY.value)
-    .whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerConeIn));
-    new JoystickButton(m_driverController, Button.kX.value)
     .whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerConeIn));
+    new JoystickButton(m_driverController, Button.kX.value)
+    .whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerConeIn));
     //ARM MOVEMENT MANUAL------------------------------------------------
     new JoystickButton(m_driverController, Button.kLeftBumper.value)
     .whileTrue(new ArmManual(m_Arm, ArmConstants.armPower));
