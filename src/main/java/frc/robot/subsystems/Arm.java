@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 import frc.robot.Constants.ArmConstants;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -13,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 public class Arm extends SubsystemBase {
   TalonFX armFx1 = new TalonFX(ArmConstants.ArmMotorLeft);
   TalonFX armFx2 = new TalonFX(ArmConstants.ArmMotorRight);
+  DutyCycleEncoder enc = new DutyCycleEncoder(0);
   /** Creates a new Arm. */
   public Arm() {
     armFx1.configFactoryDefault();
@@ -20,11 +22,12 @@ public class Arm extends SubsystemBase {
     armFx1.setNeutralMode(NeutralMode.Brake);
     armFx2.setNeutralMode(NeutralMode.Brake);
     armFx2.follow(armFx1);
-    armFx2.setInverted(true);
+    armFx2.setInverted(false); //CHECK IF ARM
 
   }
   /** Returns average encoder ticks */
   public double getEncoderRevs(){
+    //return enc.getDistance();
     return (armFx1.getSelectedSensorPosition() + 
               armFx2.getSelectedSensorPosition()) /2;
   }

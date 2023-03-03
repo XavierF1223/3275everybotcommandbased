@@ -71,7 +71,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     //DRIVE MOVEMENT-----------------------------------------------------
-    //new JoystickButton(m_driverController, 6).onTrue(new DriveDistance(m_Drivetrain, 1));
+    //new JoystickButton(m_driverController, Button.kStart.value).onTrue(new DriveDistance(m_Drivetrain, 1));
     new Trigger(()->{ if(m_driverController.getLeftTriggerAxis() > 0)
     return true;else{return false;}}).whileTrue(new SlowDrive());
     //INTAKE MOVEMENT----------------------------------------------------
@@ -84,14 +84,14 @@ public class RobotContainer {
     .whileTrue(new ArmManual(m_Arm, ArmConstants.armPower));
     new JoystickButton(m_driverController, Button.kRightBumper.value)
     .whileTrue(new ArmManual(m_Arm, -ArmConstants.armPower));
-    //ARM MOVEMENT PID CONTROLLED (IDK IF WORKS YET)---------------------
+    //ARM MOVEMENT PID CONTROLLED-----------------------------------------
     new JoystickButton(m_driverController, Button.kStart.value)
-    .onTrue(new PIDArm(m_Arm, ArmConstants.armSetStowed, ArmConstants.armP)); //JUST STARTING WITH MID GOAL EXPERIMENTATION
-    new JoystickButton(m_driverController, Button.kBack.value)
+    .onTrue(new PIDArm(m_Arm, ArmConstants.armSetStowed, ArmConstants.armP)); 
+    new JoystickButton(m_driverController, Button.kB.value)
     .onTrue(new PIDArm(m_Arm, ArmConstants.armSetTopGoal, ArmConstants.armP2));
     new JoystickButton(m_driverController, Button.kA.value)
     .onTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal, ArmConstants.armP));
-    
+    //DEBUG BUTTONS-------------------------------------------------------
   }
 
 
