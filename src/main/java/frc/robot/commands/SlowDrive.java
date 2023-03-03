@@ -20,8 +20,8 @@ public class SlowDrive extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    DriveConstants.MaxDriveOutput = 0.5;
-    DriveConstants.MaxTurnOutput = 0.5;
+    DriveConstants.MaxDriveOutput = 0.9;
+    DriveConstants.MaxTurnOutput = 0.9;
   }
 }
 

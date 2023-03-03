@@ -23,11 +23,15 @@ public class Arm extends SubsystemBase {
     armFx2.setInverted(true);
 
   }
-
+  /** Returns average encoder ticks */
   public double getEncoderRevs(){
-    // 2048 ticks per revolution of shaft, shaft on 60:1 gearbox, average of BOTH motors
     return (armFx1.getSelectedSensorPosition() + 
               armFx2.getSelectedSensorPosition()) /2;
+  }
+  /** RESET ENCODERS (best used when MECHANICAL SLIPPAGE has ocurred) */
+  public void resetEncoders(){
+    armFx1.setSelectedSensorPosition(0);
+    armFx2.setSelectedSensorPosition(0);
   }
 
   public void setMotor(double speed){
