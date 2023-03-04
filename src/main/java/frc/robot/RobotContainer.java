@@ -8,12 +8,12 @@ import frc.robot.Constants.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
+
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -30,8 +30,8 @@ public class RobotContainer {
   //private final OrchestraSub m_Orchestra = new OrchestraSub();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final XboxController m_driverController =
-      new XboxController(OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController m_driverController =
+      new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   //AUTONOMOUS     
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -40,7 +40,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     configureBindings();
-
+    
   //DRIVETRAIN DEFAULT--------------------------------------------
    m_Drivetrain.setDefaultCommand(new ArcadeDrive(m_Drivetrain, 
    () -> -m_driverController.getRawAxis(1), 
@@ -50,7 +50,7 @@ public class RobotContainer {
   m_chooser.setDefaultOption("Nothing", null);
   m_chooser.addOption("Drive Distance", new DriveDistance(m_Drivetrain, AutoConstants.autoDistance));
   SmartDashboard.putData("Autonomous",m_chooser);
-
+  
   //SONGS
   m_songChooser.setDefaultOption("Nothing", "");
   m_songChooser.addOption("doom.chrp", "doom.chrp");
@@ -70,30 +70,21 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    //DRIVE MOVEMENT-----------------------------------------------------
-    //new JoystickButton(m_driverController, Button.kStart.value).onTrue(new DriveDistance(m_Drivetrain, 1));
-    new Trigger(()->{ if(m_driverController.getLeftTriggerAxis() > 0)
-    return true;else{return false;}}).whileTrue(new SlowDrive());
-    //INTAKE MOVEMENT----------------------------------------------------
-    new JoystickButton(m_driverController, Button.kY.value)
-    .whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerConeIn));
-    new JoystickButton(m_driverController, Button.kX.value)
-    .whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerConeIn));
-    //ARM MOVEMENT MANUAL------------------------------------------------
-    new JoystickButton(m_driverController, Button.kLeftBumper.value)
-    .whileTrue(new ArmManual(m_Arm, ArmConstants.armPower));
-    new JoystickButton(m_driverController, Button.kRightBumper.value)
-    .whileTrue(new ArmManual(m_Arm, -ArmConstants.armPower));
-    //ARM MOVEMENT PID CONTROLLED-----------------------------------------
-    new JoystickButton(m_driverController, Button.kStart.value)
-    .onTrue(new PIDArm(m_Arm, ArmConstants.armSetStowed, ArmConstants.armP)); 
-    new JoystickButton(m_driverController, Button.kB.value)
-    .onTrue(new PIDArm(m_Arm, ArmConstants.armSetTopGoal, ArmConstants.armP2));
-    new JoystickButton(m_driverController, Button.kA.value)
-    .onTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal, ArmConstants.armP));
-    //DEBUG BUTTONS-------------------------------------------------------
-  }
-
+    
+    //DRIVE MOVEMENT-------------------------------------------------------------------------------------
+    //new JoystickButton(m_driverController, 6).onTrue(new DriveDistance(m_Drivetrain, 1));
+    m_driverController.rightTrigger(0.1).whileTrue(new SlowDrive());
+    //INTAKE MOVEMENT------------------------------------------------------------------------------------
+    m_driverController.y().whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerConeIn));
+    m_driverController.x().whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerCubeIn));
+    //ARM MOVEMENT MANUAL--------------------------------------------------------------------------------
+    m_driverController.leftBumper().whileTrue(new ArmManual(m_Arm, ArmConstants.armPower));
+    m_driverController.rightBumper().whileTrue(new ArmManual(m_Arm, -ArmConstants.armPower));
+    //ARM MOVEMENT PID CONTROLLED -----------------------------------------------------------------------
+    m_driverController.start().onTrue(new PIDArm(m_Arm, ArmConstants.armSetStowed, ArmConstants.armP));
+    m_driverController.back().onTrue(new PIDArm(m_Arm, ArmConstants.armSetTopGoal, ArmConstants.armP2));
+    m_driverController.a().onTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal, ArmConstants.armP));
+    }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
