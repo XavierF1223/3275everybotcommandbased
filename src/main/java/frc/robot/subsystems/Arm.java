@@ -9,20 +9,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 public class Arm extends SubsystemBase {
   TalonFX armFx1 = new TalonFX(ArmConstants.ArmMotorLeft);
   TalonFX armFx2 = new TalonFX(ArmConstants.ArmMotorRight);
   DutyCycleEncoder enc = new DutyCycleEncoder(0);
+
   /** Creates a new Arm. */
   public Arm() {
     armFx1.configFactoryDefault();
     armFx2.configFactoryDefault();
     armFx1.setNeutralMode(NeutralMode.Brake);
     armFx2.setNeutralMode(NeutralMode.Brake);
+    armFx1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 50, 1));
+    armFx2.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 50, 1));
     armFx2.follow(armFx1);
-    armFx2.setInverted(false); //CHECK IF ARM
+    armFx2.setInverted(false);
 
   }
   /** Returns average encoder ticks */
@@ -39,6 +43,10 @@ public class Arm extends SubsystemBase {
 
   public void setMotor(double speed){
     armFx1.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void setMotorHold(double amps){
+    armFx1.set(ControlMode.Current, amps);
   }
 
   public void stop(){

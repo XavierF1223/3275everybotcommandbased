@@ -94,7 +94,7 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-
+    
     //SMARTDASHBOARD DEBUG INFO
     SmartDashboard.putNumber("Distance Left", encodertoMeter(leftDistance()));
     SmartDashboard.putNumber("Distance Right", encodertoMeter(rightDistance()));

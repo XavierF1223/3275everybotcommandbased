@@ -61,6 +61,7 @@ public class PIDArm extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_Arm.setMotor(0);
+    m_Arm.setMotorHold(25);
   }
 
   // Returns true when the command should end.
