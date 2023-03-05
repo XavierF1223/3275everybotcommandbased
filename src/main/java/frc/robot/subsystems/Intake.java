@@ -24,6 +24,10 @@ public class Intake extends SubsystemBase {
   public void stop(){
     intakeSRX.set(ControlMode.PercentOutput, 0);
   }
+
+  public double curCheck(){
+     return intakeSRX.getStatorCurrent();
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

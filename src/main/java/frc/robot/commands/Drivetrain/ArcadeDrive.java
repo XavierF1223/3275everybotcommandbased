@@ -2,9 +2,10 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Drivetrain;
 import java.util.function.Supplier;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.Constants.DriveConstants;
@@ -14,7 +15,8 @@ public class ArcadeDrive extends CommandBase {
   private final Drivetrain m_Drive;
   private final Supplier<Double> xSpeed, zRotation;
   public double MaxDriveOutput;
-  //private final double xSpeed, zRotation;
+  private SlewRateLimiter dLimiter = new SlewRateLimiter(DriveConstants.driveSlewLimit);
+  private SlewRateLimiter tLimiter = new SlewRateLimiter(DriveConstants.turnSlewLimit);
   /** Creates a new ArcadeDrive. */
   public ArcadeDrive(Drivetrain m_Drive, Supplier<Double> xSpeed, Supplier<Double> zRotation) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -32,20 +34,21 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // grabbing the controller values
-    double realTimeSpeed = xSpeed.get();
-    double realTimeTurn = zRotation.get();
-    //double realTimeSpeed = xSpeed;
-    //double realTimeTurn = zRotation;
+    // grabbing the controller values and squaring them to 'naturalize' inputs
+    double realTimeSpeed = Math.pow(xSpeed.get(),2);
+    double realTimeTurn = Math.pow(zRotation.get(),2);
+
     // drivespeed maths here instead of in the controller spot
     realTimeSpeed = MathUtil.applyDeadband(realTimeSpeed, DriveConstants.Deadband);
     realTimeSpeed = (realTimeSpeed * DriveConstants.MaxDriveOutput);
+    realTimeSpeed = dLimiter.calculate(realTimeTurn);
     
     // turnspeed maths here instead of in the controller spot
     realTimeTurn = MathUtil.applyDeadband(realTimeTurn, DriveConstants.Deadband);
     realTimeTurn = (realTimeTurn * DriveConstants.MaxTurnOutput);
+    realTimeTurn = tLimiter.calculate(realTimeTurn);
 
-    // finalizing
+    // finalizing DONT TOUCH
     double left = realTimeSpeed + realTimeTurn;
     double right = realTimeSpeed - realTimeTurn;
 
