@@ -5,10 +5,10 @@
 package frc.robot;
 
 import frc.robot.Constants.*;
-import frc.robot.commands.*;
+import frc.robot.commands.Arm.*;
+import frc.robot.commands.Drivetrain.*;
+import frc.robot.commands.Intake.*;
 import frc.robot.subsystems.*;
-
-
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,6 +33,9 @@ public class RobotContainer {
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
+  private final CommandXboxController m_opController =
+  new CommandXboxController(OperatorConstants.kOpControllerPort);
+
   //AUTONOMOUS     
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   SendableChooser<String> m_songChooser = new SendableChooser<>();
@@ -40,7 +43,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     configureBindings();
-    
+  
   //DRIVETRAIN DEFAULT--------------------------------------------
    m_Drivetrain.setDefaultCommand(new ArcadeDrive(m_Drivetrain, 
    () -> -m_driverController.getRawAxis(1), 

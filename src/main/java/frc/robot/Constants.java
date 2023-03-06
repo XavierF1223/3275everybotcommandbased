@@ -16,6 +16,7 @@ public final class Constants {
 
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kOpControllerPort = 1;
   }
 
 public static class DriveConstants {
@@ -26,11 +27,18 @@ public static class DriveConstants {
   public static final int RR = 51;
   //DRIVE CONSTANTS
   public static final double Deadband = 0.1;
-  public static double MaxDriveOutput = 0.9;
-  public static double MaxTurnOutput = 0.9;
+  public static double MaxDriveOutput = 0.5;
+  public static double MaxTurnOutput = 0.5;
+  public static final double driveSlewLimit = 3;
+  public static final double turnSlewLimit = 0;
   //MISC DRIVEBASE CONSTANTS
   public static final int Front_Angle_Offset = 0;
   public static final double driveDistSpd = 0.15;
+  //ODOMETRY AND PATHFOLLOWING CONSTANTS GET THESE FROM DRIVEBASE CHARACTERIZATION PROCESS
+  public static final double ksVolts = 0;
+  public static final double kvVoltSecondsPerMeter = 0;
+  public static final double kaVoltSecondsSquaredPerMeter = 0;
+  public static final double kPDriveVel = 0;
 
 }
 
@@ -60,10 +68,15 @@ public static class IntakeConstants {
   public static final double intakePowerConeIn = 0.9;
   public static final double intakePowerCubeIn = 0.9;
   public static final double holdPower = 0.25;
+  public static final double intakeCurrentLimit = 15;
 
 }
 
 public static class AutoConstants {
   public static final double autoDistance = 1; //SET
+  //TRAJECTORY FOLLOWING VALUES
+  public static final double kMaxSpeedMetersPerSecond = 0;
+  public static final double kMaxAccelerationMetersPerSecondSquared = 0;
+
 }
 }
