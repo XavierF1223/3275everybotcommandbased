@@ -38,8 +38,11 @@ public class IntakeCone extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    return false;
+    /** 
      if(m_Intake.curCheck() > IntakeConstants.intakeCurrentLimit)
       return true;
     return false;
+    */
   }
 }

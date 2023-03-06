@@ -10,6 +10,8 @@ import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.subsystems.*;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -76,7 +78,8 @@ public class RobotContainer {
     
     //DRIVE MOVEMENT-------------------------------------------------------------------------------------
     //m_driverController.leftTrigger(0.1).onTrue(new DriveDistance(m_Drivetrain, 1));
-    m_driverController.rightTrigger(0.1).whileTrue(new SlowDrive());
+    m_driverController.rightTrigger(0.1).whileTrue(new OverDrive());
+    m_driverController.leftTrigger(0.1).onTrue(new neutralMode(m_Drivetrain, NeutralMode.Brake));
     //INTAKE MOVEMENT------------------------------------------------------------------------------------
     m_driverController.y().whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerConeIn));
     m_driverController.x().whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerCubeIn));

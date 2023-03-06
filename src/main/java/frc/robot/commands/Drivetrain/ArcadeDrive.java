@@ -35,18 +35,18 @@ public class ArcadeDrive extends CommandBase {
   @Override
   public void execute() {
     // grabbing the controller values and squaring them to 'naturalize' inputs
-    double realTimeSpeed = Math.pow(xSpeed.get(),2);
-    double realTimeTurn = Math.pow(zRotation.get(),2);
+    double realTimeSpeed = Math.pow(xSpeed.get(),3);
+    double realTimeTurn = Math.pow(zRotation.get(),3);
 
     // drivespeed maths here instead of in the controller spot
     realTimeSpeed = MathUtil.applyDeadband(realTimeSpeed, DriveConstants.Deadband);
     realTimeSpeed = (realTimeSpeed * DriveConstants.MaxDriveOutput);
-    realTimeSpeed = dLimiter.calculate(realTimeTurn);
+    //realTimeSpeed = dLimiter.calculate(realTimeTurn);
     
     // turnspeed maths here instead of in the controller spot
     realTimeTurn = MathUtil.applyDeadband(realTimeTurn, DriveConstants.Deadband);
     realTimeTurn = (realTimeTurn * DriveConstants.MaxTurnOutput);
-    realTimeTurn = tLimiter.calculate(realTimeTurn);
+    //realTimeTurn = tLimiter.calculate(realTimeTurn);
 
     // finalizing DONT TOUCH
     double left = realTimeSpeed + realTimeTurn;

@@ -156,7 +156,7 @@ public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFir
   public void neutralMode(NeutralMode mode){
     FL.setNeutralMode(mode);
     FR.setNeutralMode(mode);
-    System.out.println("Drive Motors in " + mode + " Mode!");
+    //System.out.println("Drive Motors in " + mode + " Mode!");
   }
 
   public void factResetDrive(){

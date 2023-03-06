@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 import frc.robot.Constants.ArmConstants;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -36,9 +37,10 @@ public class Arm extends SubsystemBase {
               armFx2.getSelectedSensorPosition()) /2;
   }
   /** RESET ENCODERS (best used when MECHANICAL SLIPPAGE has ocurred) */
-  public void resetEncoders(){
+  public Command resetEncoders(){
     armFx1.setSelectedSensorPosition(0);
     armFx2.setSelectedSensorPosition(0);
+    return null;
   }
 
   public void setMotor(double speed){
