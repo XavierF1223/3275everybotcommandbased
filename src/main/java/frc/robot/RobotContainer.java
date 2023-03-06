@@ -72,17 +72,17 @@ public class RobotContainer {
   private void configureBindings() {
     
     //DRIVE MOVEMENT-------------------------------------------------------------------------------------
-    //new JoystickButton(m_driverController, 6).onTrue(new DriveDistance(m_Drivetrain, 1));
+    //m_driverController.leftTrigger(0.1).onTrue(new DriveDistance(m_Drivetrain, 1));
     m_driverController.rightTrigger(0.1).whileTrue(new SlowDrive());
     //INTAKE MOVEMENT------------------------------------------------------------------------------------
     m_driverController.y().whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerConeIn));
     m_driverController.x().whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerCubeIn));
     //ARM MOVEMENT MANUAL--------------------------------------------------------------------------------
-    m_driverController.leftBumper().whileTrue(new ArmManual(m_Arm, ArmConstants.armPower));
-    m_driverController.rightBumper().whileTrue(new ArmManual(m_Arm, -ArmConstants.armPower));
+    m_driverController.start().whileTrue(new ArmManual(m_Arm, -ArmConstants.armPower));
+    m_driverController.back().whileTrue(new ArmManual(m_Arm, ArmConstants.armPower));
     //ARM MOVEMENT PID CONTROLLED -----------------------------------------------------------------------
-    m_driverController.start().onTrue(new PIDArm(m_Arm, ArmConstants.armSetStowed, ArmConstants.armP));
-    m_driverController.back().onTrue(new PIDArm(m_Arm, ArmConstants.armSetTopGoal, ArmConstants.armP2));
+    m_driverController.leftBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetStowed, ArmConstants.armP));
+    m_driverController.rightBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetTopGoal, ArmConstants.armP2));
     m_driverController.a().onTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal, ArmConstants.armP));
     }
 

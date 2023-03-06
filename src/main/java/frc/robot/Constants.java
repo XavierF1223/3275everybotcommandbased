@@ -47,9 +47,9 @@ public static class ArmConstants {
   public static final double armI = 0;// NOT NEEDED
   public static final double armD = 0;// NOT NEEDED
   public static final double armTol = 0.01;
-  public static final int armSetStowed = -1024;//close to 0 but not 0 to avoid OVERDRIVE
-  public static final int armSetMidGoal = -30000;
-  public static final int armSetTopGoal = -53000;
+  public static final int armSetStowed = 1024;//close to 0 but not 0 to avoid OVERDRIVE
+  public static final int armSetMidGoal = 30000;
+  public static final int armSetTopGoal = 60000;
 
 }
 
@@ -58,7 +58,7 @@ public static class IntakeConstants {
   public static final int IntakeMotor = 6;
   //MOTOR INTAKE POWERS
   public static final double intakePowerConeIn = 0.9;
-  public static final double intakePowerCubeIn = 0.65;
+  public static final double intakePowerCubeIn = 0.9;
   public static final double holdPower = 0.25;
 
 }

@@ -32,7 +32,7 @@ public class Drivetrain extends SubsystemBase {
 
   public Drivetrain() {
     factResetDrive();
-    neutralMode(NeutralMode.Brake);
+    neutralMode(NeutralMode.Coast);
     FL.setInverted(false);
     RL.setInverted(false);
     FR.setInverted(false);
