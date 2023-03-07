@@ -6,11 +6,16 @@ package frc.robot;
 
 import frc.robot.Constants.*;
 import frc.robot.commands.Arm.*;
+import frc.robot.commands.Auto.ConeDrive;
+import frc.robot.commands.Auto.PathplannerAuto;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.subsystems.*;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,6 +34,9 @@ public class RobotContainer {
   private final Drivetrain m_Drivetrain = new Drivetrain();
   private final Intake m_Intake = new Intake();
   private final Arm m_Arm = new Arm();
+  private final PathPlannerTrajectory auto1 = PathPlanner.loadPath("Auto1", 
+  new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond, AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+  
   //private final OrchestraSub m_Orchestra = new OrchestraSub();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -54,6 +62,10 @@ public class RobotContainer {
   //AUTOS
   m_chooser.setDefaultOption("Nothing", null);
   m_chooser.addOption("Drive Distance", new DriveDistance(m_Drivetrain, AutoConstants.autoDistance));
+  m_chooser.addOption("TopScoreDriveShort", new ConeDrive(m_Drivetrain, m_Intake, m_Arm, 3));//SHORT SIDE OF TAPE AUTO
+  m_chooser.addOption("TopScoreDriveLong", new ConeDrive(m_Drivetrain, m_Intake, m_Arm, 4.5));//OVER THE CABLE PROTECTOR AUTO
+  m_chooser.addOption("TopScoreBalance", new ConeDrive(m_Drivetrain, m_Intake, m_Arm, 2.50825));//ON THE SCALE??
+  m_chooser.addOption("pathplannerauto1", new PathplannerAuto(auto1));
   SmartDashboard.putData("Autonomous",m_chooser);
   
   //SONGS
@@ -79,10 +91,10 @@ public class RobotContainer {
     //DRIVE MOVEMENT-------------------------------------------------------------------------------------
     //m_driverController.leftTrigger(0.1).onTrue(new DriveDistance(m_Drivetrain, 1));
     m_driverController.rightTrigger(0.1).whileTrue(new OverDrive());
-    m_driverController.leftTrigger(0.1).onTrue(new neutralMode(m_Drivetrain, NeutralMode.Brake));
-    //INTAKE MOVEMENT------------------------------------------------------------------------------------
-    m_driverController.y().whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerConeIn));
-    m_driverController.x().whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerCubeIn));
+    m_driverController.leftTrigger(0.1).and(m_driverController.rightTrigger(0.1)).onTrue(new neutralMode(m_Drivetrain, NeutralMode.Brake));
+    //INTAKE---------------------------------------------------------------------------------------------
+    m_driverController.y().whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerCone));
+    m_driverController.x().whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerCube));
     //ARM MOVEMENT MANUAL--------------------------------------------------------------------------------
     m_driverController.start().whileTrue(new ArmManual(m_Arm, -ArmConstants.armPower));
     m_driverController.back().whileTrue(new ArmManual(m_Arm, ArmConstants.armPower));

@@ -29,7 +29,7 @@ public static class DriveConstants {
   public static final double Deadband = 0.1;
   public static double MaxDriveOutput = 0.5;
   public static double MaxTurnOutput = 0.5;
-  public static final double driveSlewLimit = 3;
+  public static final double driveSlewLimit = 0;
   public static final double turnSlewLimit = 0;
   //MISC DRIVEBASE CONSTANTS
   public static final int Front_Angle_Offset = 0;
@@ -48,6 +48,7 @@ public static class ArmConstants {
   public static final int ArmMotorRight = 7;
   //ARM MOTOR OUTPUT IN PERCENTOUTPUT
   public static final double armPower = 0.15;
+  public static final double armHoldPowerAmps = 25;
   //ARM PID CONSTANTS
   public static final double armFF = 0;//NOT NEEDED(?)
   public static final double armP = 0.00005;//ARM STOW/MID EXTENDED
@@ -58,6 +59,7 @@ public static class ArmConstants {
   public static final int armSetStowed = 1024;//close to 0 but not 0 to avoid OVERDRIVE
   public static final int armSetMidGoal = 30000;
   public static final int armSetTopGoal = 58800;
+  
 
 }
 
@@ -65,15 +67,15 @@ public static class IntakeConstants {
   //MOTOR CAN ID
   public static final int IntakeMotor = 6;
   //MOTOR INTAKE POWERS
-  public static final double intakePowerConeIn = 0.9;
-  public static final double intakePowerCubeIn = 0.9;
+  public static final double intakePowerCone = 0.9;
+  public static final double intakePowerCube = 0.9;
   public static final double holdPower = 0.25;
   public static final double intakeCurrentLimit = 15;
 
 }
 
 public static class AutoConstants {
-  public static final double autoDistance = 1; //SET
+  public static final double autoDistance = 4.5; //should get over cable protector, scale, and short side
   //TRAJECTORY FOLLOWING VALUES
   public static final double kMaxSpeedMetersPerSecond = 0;
   public static final double kMaxAccelerationMetersPerSecondSquared = 0;
