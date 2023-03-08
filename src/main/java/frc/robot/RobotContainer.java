@@ -34,19 +34,19 @@ public class RobotContainer {
   private final Drivetrain m_Drivetrain = new Drivetrain();
   private final Intake m_Intake = new Intake();
   private final Arm m_Arm = new Arm();
+  
+  //PATHPLANNER----------------------------------------------------------------------------------
   private final PathPlannerTrajectory auto1 = PathPlanner.loadPath("Auto1", 
   new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond, AutoConstants.kMaxAccelerationMetersPerSecondSquared));
   
-  //private final OrchestraSub m_Orchestra = new OrchestraSub();
+
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
-
   private final CommandXboxController m_opController =
   new CommandXboxController(OperatorConstants.kOpControllerPort);
-
-  //AUTONOMOUS     
+  //AUTONOMOUS-------------------------------------------------------------------    
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   SendableChooser<String> m_songChooser = new SendableChooser<>();
 
