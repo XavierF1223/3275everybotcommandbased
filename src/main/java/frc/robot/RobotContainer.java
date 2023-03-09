@@ -92,16 +92,17 @@ public class RobotContainer {
     //m_driverController.leftTrigger(0.1).onTrue(new DriveDistance(m_Drivetrain, 1));
     m_driverController.rightTrigger(0.1).whileTrue(new OverDrive());
     m_driverController.leftTrigger(0.1).and(m_driverController.rightTrigger(0.1)).onTrue(new neutralMode(m_Drivetrain, NeutralMode.Brake));
+    m_driverController.leftBumper().and(m_driverController.rightBumper()).onTrue(new neutralMode(m_Drivetrain, NeutralMode.Coast));
     //INTAKE---------------------------------------------------------------------------------------------
-    m_driverController.y().whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerCone));
-    m_driverController.x().whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerCube));
+    m_opController.y().whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerCone));
+    m_opController.x().whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerCube));
     //ARM MOVEMENT MANUAL--------------------------------------------------------------------------------
-    m_driverController.start().whileTrue(new ArmManual(m_Arm, -ArmConstants.armPower));
-    m_driverController.back().whileTrue(new ArmManual(m_Arm, ArmConstants.armPower));
+    m_opController.start().whileTrue(new ArmManual(m_Arm, -ArmConstants.armPower));
+    m_opController.back().whileTrue(new ArmManual(m_Arm, ArmConstants.armPower));
     //ARM MOVEMENT PID CONTROLLED -----------------------------------------------------------------------
-    m_driverController.leftBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetStowed, ArmConstants.armP));
-    m_driverController.rightBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetTopGoal, ArmConstants.armP2));
-    m_driverController.a().onTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal, ArmConstants.armP));
+    m_opController.leftBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetStowed, ArmConstants.armP));
+    m_opController.rightBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetTopGoal, ArmConstants.armP2));
+    m_opController.a().onTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal, ArmConstants.armP));
     }
 
   /**
