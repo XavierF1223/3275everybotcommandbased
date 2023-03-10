@@ -7,21 +7,19 @@ package frc.robot.commands.Auto;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.Arm.PIDArm;
 import frc.robot.commands.Drivetrain.DriveDistance;
-import frc.robot.commands.Intake.IntakeCone;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 
 
-public class ConeDrive extends SequentialCommandGroup {
+public class CubeDrive extends SequentialCommandGroup {
   Drivetrain m_Drivetrain;
   Intake m_Intake;
   Arm m_Arm;
 
-  public ConeDrive(Drivetrain m_Drivetrain, Intake m_Intake, Arm m_Arm, double distance) {
+  public CubeDrive(Drivetrain m_Drivetrain, Intake m_Intake, Arm m_Arm, double distance) {
     this.m_Drivetrain = m_Drivetrain;
     this.m_Intake = m_Intake;
     this.m_Arm = m_Arm;

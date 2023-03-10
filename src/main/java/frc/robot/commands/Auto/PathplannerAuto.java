@@ -37,5 +37,8 @@ public class PathplannerAuto extends SequentialCommandGroup {
       m_Drivetrain.followTrajectoryCommand(auto, true)
       
     );
+    addRequirements(m_Arm);
+    addRequirements(m_Drivetrain);
+    addRequirements(m_Intake);
   }
 }

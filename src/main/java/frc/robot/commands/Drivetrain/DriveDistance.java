@@ -14,10 +14,12 @@ public class DriveDistance extends CommandBase {
   private final Drivetrain m_Drive;
   private final double distance;
   private double encoderSetpoint;
+  private double driveDistSpd;
 
-  public DriveDistance(Drivetrain m_Drive, double distance) {
+  public DriveDistance(Drivetrain m_Drive, double distance, double driveDistSpd) {
     this.m_Drive = m_Drive;
     this.distance = distance;
+    this.driveDistSpd = driveDistSpd;
     addRequirements(m_Drive);
   }
 
@@ -31,7 +33,7 @@ public class DriveDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Drive.setMotors(DriveConstants.driveDistSpd , DriveConstants.driveDistSpd);
+    m_Drive.setMotors(driveDistSpd, driveDistSpd);
     SmartDashboard.putNumber("encoder total distance", m_Drive.totalDistance());
     SmartDashboard.putNumber("encoder setpoint distance", encoderSetpoint);
   }

@@ -37,22 +37,22 @@ public class ArcadeDrive extends CommandBase {
     // grabbing the controller values and squaring them to 'naturalize' inputs
     double drive = xSpeed.get();
     double turn = zRotation.get();
-    double xSpeed = Math.copySign(drive * drive, drive);
-    double zRotation = Math.copySign(turn * turn, turn);
+    double drivecalc = Math.copySign(drive * drive, drive);
+    double turncalc = Math.copySign(turn * turn, turn);
 
     // drivespeed maths here instead of in the controller spot
-    xSpeed = MathUtil.applyDeadband(xSpeed, DriveConstants.Deadband);
-    xSpeed = (xSpeed * DriveConstants.MaxDriveOutput);
-    xSpeed = dLimiter.calculate(xSpeed);
+    drivecalc = MathUtil.applyDeadband(drivecalc, DriveConstants.Deadband);
+    drivecalc = (drivecalc * DriveConstants.MaxDriveOutput);
+    drivecalc = dLimiter.calculate(drivecalc);
     
     // turnspeed maths here instead of in the controller spot
-    zRotation = MathUtil.applyDeadband(zRotation, DriveConstants.Deadband);
-    zRotation = (zRotation * DriveConstants.MaxTurnOutput);
-    zRotation = tLimiter.calculate(zRotation);
+    turncalc = MathUtil.applyDeadband(turncalc, DriveConstants.Deadband);
+    turncalc = (turncalc * DriveConstants.MaxTurnOutput);
+    //turncalc = tLimiter.calculate(turncalc);
 
     // finalizing DONT TOUCH
-    double left = xSpeed + zRotation;
-    double right = xSpeed - zRotation;
+    double left = drivecalc + turncalc;
+    double right = drivecalc - turncalc;
 
     m_Drive.setMotors(left, right);
 

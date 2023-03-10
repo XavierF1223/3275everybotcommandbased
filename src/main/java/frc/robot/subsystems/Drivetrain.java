@@ -121,6 +121,9 @@ public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFir
   /** Averages BOTH sides of Drivetrain into a distance (meters) */
   public double totalDistance(){
     return (leftDistance() + rightDistance() / 2);} //MAKE SURE THIS RETURNS A POSITIVE VALUE ALWAYS
+  public boolean isTol(double distance){
+    return (totalDistance() >= distance);
+  }
   /**FALCON 500 ENCODER TO METERS*/
   public double encodertoMeter(double sensorCounts){
     double motorRotations = (double)sensorCounts / kCountsPerRev;
@@ -156,7 +159,7 @@ public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFir
   public void neutralMode(NeutralMode mode){
     FL.setNeutralMode(mode);
     FR.setNeutralMode(mode);
-    //System.out.println("Drive Motors in " + mode + " Mode!");
+    System.out.println("Drive Motors in " + mode + " Mode!");
   }
 
   public void factResetDrive(){

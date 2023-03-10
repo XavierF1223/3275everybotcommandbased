@@ -27,11 +27,11 @@ public class neutralMode extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_Drive.neutralMode(mode);
   }
 
   @Override
   public void execute() {
-    m_Drive.neutralMode(mode);
   }
 
   @Override

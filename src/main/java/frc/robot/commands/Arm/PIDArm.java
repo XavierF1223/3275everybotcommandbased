@@ -42,6 +42,7 @@ public class PIDArm extends CommandBase {
   @Override
   public void initialize() {
     m_ArmPidController.reset();
+    m_ArmPidController.setTolerance(2000);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -62,13 +63,15 @@ public class PIDArm extends CommandBase {
   public void end(boolean interrupted) {
     m_Arm.setMotor(0);
     m_Arm.setMotorHold(ArmConstants.armHoldPowerAmps);
+    System.out.println("ARM COMMAND DONE");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (m_ArmPidController.atSetpoint())
+    if (m_ArmPidController.atSetpoint() == true)
       return true;
-    return false;
+    else
+      return false;
   }
 }

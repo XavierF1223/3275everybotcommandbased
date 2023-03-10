@@ -14,14 +14,14 @@ public class OverDrive extends CommandBase {
 
   @Override
   public void initialize() {
-    DriveConstants.MaxDriveOutput = 0.8;
-    DriveConstants.MaxTurnOutput = 0.8;
+    DriveConstants.MaxDriveOutput = 0.3;
+    DriveConstants.MaxTurnOutput = 0.3;
   }
 
   @Override
   public void end(boolean interrupted) {
-    DriveConstants.MaxDriveOutput = 0.5;
-    DriveConstants.MaxTurnOutput = 0.5;
+    DriveConstants.MaxDriveOutput = 0.6;
+    DriveConstants.MaxTurnOutput = 0.6;
   }
 }
 

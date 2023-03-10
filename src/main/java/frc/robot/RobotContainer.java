@@ -6,8 +6,7 @@ package frc.robot;
 
 import frc.robot.Constants.*;
 import frc.robot.commands.Arm.*;
-import frc.robot.commands.Auto.ConeDrive;
-import frc.robot.commands.Auto.PathplannerAuto;
+import frc.robot.commands.Auto.*;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.subsystems.*;
@@ -20,6 +19,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -61,18 +61,26 @@ public class RobotContainer {
 
   //AUTOS
   m_chooser.setDefaultOption("Nothing", null);
-  m_chooser.addOption("Drive Distance", new DriveDistance(m_Drivetrain, AutoConstants.autoDistance));
-  m_chooser.addOption("TopScoreDriveShort", new ConeDrive(m_Drivetrain, m_Intake, m_Arm, 3));//SHORT SIDE OF TAPE AUTO
-  m_chooser.addOption("TopScoreDriveLong", new ConeDrive(m_Drivetrain, m_Intake, m_Arm, 4.5));//OVER THE CABLE PROTECTOR AUTO
-  m_chooser.addOption("TopScoreBalance", new ConeDrive(m_Drivetrain, m_Intake, m_Arm, 2.50825));//ON THE SCALE??
-  m_chooser.addOption("pathplannerauto1", new PathplannerAuto(auto1));
+  m_chooser.addOption("Drive Distance", new DriveDistance(m_Drivetrain, 2.1, -0.15));
+  m_chooser.addOption("ConeDrive", new ConeDrive(m_Drivetrain, m_Intake, m_Arm, 2.1));//SHORT SIDE OF TAPE AUTO
+  m_chooser.addOption("CubeDrive", new CubeDrive(m_Drivetrain, m_Intake, m_Arm, 2.1));//ON THE SCALE??
+  //m_chooser.addOption("timedauto", new auto1(m_Drivetrain, m_Intake, m_Arm, 2.5));
+  //m_chooser.addOption("pathplannerauto1", new PathplannerAuto(auto1));
   SmartDashboard.putData("Autonomous",m_chooser);
   
   //SONGS
   m_songChooser.setDefaultOption("Nothing", "");
   m_songChooser.addOption("doom.chrp", "doom.chrp");
-  SmartDashboard.putData("Song", m_songChooser);
+  //SmartDashboard.putData("Song", m_songChooser);
   //m_Orchestra.LoadMusicSelection(getSong());
+  }
+
+  public void neutralMode(NeutralMode mode){
+    m_Drivetrain.neutralMode(mode);
+  }
+  public void resetEncoders(){
+    m_Drivetrain.zeroEncoders();
+    m_Arm.zeroEncoders();
   }
 
   
@@ -91,18 +99,20 @@ public class RobotContainer {
     //DRIVE MOVEMENT-------------------------------------------------------------------------------------
     //m_driverController.leftTrigger(0.1).onTrue(new DriveDistance(m_Drivetrain, 1));
     m_driverController.rightTrigger(0.1).whileTrue(new OverDrive());
-    m_driverController.leftTrigger(0.1).and(m_driverController.rightTrigger(0.1)).onTrue(new neutralMode(m_Drivetrain, NeutralMode.Brake));
-    m_driverController.leftBumper().and(m_driverController.rightBumper()).onTrue(new neutralMode(m_Drivetrain, NeutralMode.Coast));
+    //m_driverController.leftTrigger(0.1).and(m_driverController.rightTrigger(0.1)).onTrue(new neutralMode(m_Drivetrain, NeutralMode.Brake));
+    m_driverController.leftStick().onTrue(Commands.runOnce(() -> m_Drivetrain.neutralMode(NeutralMode.Brake)));
     //INTAKE---------------------------------------------------------------------------------------------
+    m_driverController.y().whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerCone));
+    m_driverController.x().whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerCube));
     m_opController.y().whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerCone));
     m_opController.x().whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerCube));
     //ARM MOVEMENT MANUAL--------------------------------------------------------------------------------
-    m_opController.start().whileTrue(new ArmManual(m_Arm, -ArmConstants.armPower));
-    m_opController.back().whileTrue(new ArmManual(m_Arm, ArmConstants.armPower));
+    m_driverController.start().whileTrue(new ArmManual(m_Arm, -ArmConstants.armPower));
+    m_driverController.back().whileTrue(new ArmManual(m_Arm, ArmConstants.armPower));
     //ARM MOVEMENT PID CONTROLLED -----------------------------------------------------------------------
-    m_opController.leftBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetStowed, ArmConstants.armP));
-    m_opController.rightBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetTopGoal, ArmConstants.armP2));
-    m_opController.a().onTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal, ArmConstants.armP));
+    m_driverController.leftBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetStowed, ArmConstants.armP));
+    m_driverController.rightBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetTopGoal, ArmConstants.armP2));
+    m_driverController.a().onTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal, ArmConstants.armP));
     }
 
   /**

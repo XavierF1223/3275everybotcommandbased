@@ -36,8 +36,12 @@ public class Arm extends SubsystemBase {
     return (armFx1.getSelectedSensorPosition() + 
               armFx2.getSelectedSensorPosition()) /2;
   }
+
+  public boolean isTol(){
+    return (getEncoderRevs() >= ArmConstants.armSetTopGoal-2000);
+  }
   /** RESET ENCODERS (best used when MECHANICAL SLIPPAGE has ocurred) */
-  public Command resetEncoders(){
+  public Command zeroEncoders(){
     armFx1.setSelectedSensorPosition(0);
     armFx2.setSelectedSensorPosition(0);
     return null;

@@ -9,6 +9,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.commands.Drivetrain.neutralMode;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.OrchestraSub;
 
@@ -24,6 +27,7 @@ public class Robot extends TimedRobot {
   private String Song;
   private OrchestraSub m_Orchestra;
   private Drivetrain m_Drivetrain;
+  private Arm m_Arm;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -54,7 +58,8 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -62,8 +67,12 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    
+    m_robotContainer.neutralMode(NeutralMode.Brake);
+    m_robotContainer.resetEncoders();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    m_Drivetrain.neutralMode(NeutralMode.Brake);
+
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -77,11 +86,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    m_Drivetrain.neutralMode(NeutralMode.Coast);
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
+    m_robotContainer.neutralMode(NeutralMode.Coast);
+
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -95,11 +102,11 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-
+    /** 
     Song = m_robotContainer.getSong();
     m_Orchestra.LoadMusicSelection(Song);
     m_Orchestra.play();
-    
+    */
   }
 
   /** This function is called periodically during test mode. */

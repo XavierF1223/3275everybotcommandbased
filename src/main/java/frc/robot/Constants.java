@@ -29,7 +29,7 @@ public static class DriveConstants {
   public static final double Deadband = 0.1;
   public static double MaxDriveOutput = 0.5;
   public static double MaxTurnOutput = 0.5;
-  public static final double driveSlewLimit = 0;
+  public static final double driveSlewLimit = 4;
   public static final double turnSlewLimit = 0;
   //MISC DRIVEBASE CONSTANTS
   public static final int Front_Angle_Offset = 0;
@@ -38,7 +38,7 @@ public static class DriveConstants {
   public static final double ksVolts = 0;
   public static final double kvVoltSecondsPerMeter = 0;
   public static final double kaVoltSecondsSquaredPerMeter = 0;
-  public static final double kPDriveVel = 0;
+  public static final double kPDriveVel = 10;
 
 }
 
@@ -48,11 +48,11 @@ public static class ArmConstants {
   public static final int ArmMotorRight = 7;
   //ARM MOTOR OUTPUT IN PERCENTOUTPUT
   public static final double armPower = 0.15;
-  public static final double armHoldPowerAmps = 25;
+  public static final double armHoldPowerAmps = 15;
   //ARM PID CONSTANTS
   public static final double armFF = 0;//NOT NEEDED(?)
   public static final double armP = 0.00005;//ARM STOW/MID EXTENDED
-  public static final double armP2 = 0.00007;//ARM FULL EXTENDED
+  public static final double armP2 = 0.00009;//ARM FULL EXTENDED
   public static final double armI = 0;// NOT NEEDED
   public static final double armD = 0;// NOT NEEDED
   public static final double armTol = 0.01;
@@ -75,7 +75,7 @@ public static class IntakeConstants {
 }
 
 public static class AutoConstants {
-  public static final double autoDistance = 4.5; //should get over cable protector, scale, and short side
+  public static final double autoDistance = 3; //should get over cable protector, scale, and short side
   //TRAJECTORY FOLLOWING VALUES
   public static final double kMaxSpeedMetersPerSecond = 0;
   public static final double kMaxAccelerationMetersPerSecondSquared = 0;
