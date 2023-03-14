@@ -70,7 +70,7 @@ public static class IntakeConstants {
   public static final double intakePowerCone = 0.9;
   public static final double intakePowerCube = 0.9;
   public static final double holdPower = 0.25;
-  public static final double intakeCurrentLimit = 15;
+  public static final double intakeCurrentLimit = 60;
 
 }
 

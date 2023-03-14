@@ -34,11 +34,10 @@ public class PathplannerAuto extends SequentialCommandGroup {
       Commands.waitSeconds(3),
       new IntakeCone(m_Intake, IntakeConstants.intakePowerCone),
       Commands.waitSeconds(2),
-      m_Drivetrain.followTrajectoryCommand(auto, true)
+      m_Drivetrain.ramAutoBuilder.fullAuto(m_Drivetrain.auto1),
+      Commands.runOnce(()-> m_Drivetrain.followTrajectoryCommand(auto,true))
+      .andThen(Commands.runOnce(()->m_Drivetrain.setMotorsVolts(0, 0), m_Drivetrain))
       
     );
-    addRequirements(m_Arm);
-    addRequirements(m_Drivetrain);
-    addRequirements(m_Intake);
   }
 }

@@ -9,11 +9,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.commands.Drivetrain.neutralMode;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.OrchestraSub;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -24,10 +19,6 @@ import frc.robot.subsystems.OrchestraSub;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-  private String Song;
-  private OrchestraSub m_Orchestra;
-  private Drivetrain m_Drivetrain;
-  private Arm m_Arm;
 
   /**
    * This function is run when the robot is first started up and should be used for any
