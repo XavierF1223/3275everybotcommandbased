@@ -3,6 +3,9 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+import java.util.HashMap;
+
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -28,8 +31,11 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.util.Units;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPRamseteCommand;
+import com.pathplanner.lib.auto.RamseteAutoBuilder;
 
 
 
@@ -48,6 +54,7 @@ public class Drivetrain extends SubsystemBase {
   public static final double kTrackwidthMeters = 0;
   public DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
   public static final double kDefaultMaxOutput = 1.0;
+  public PathPlannerTrajectory auto1;
 
   public Drivetrain() {
     factResetDrive();
@@ -60,6 +67,9 @@ public class Drivetrain extends SubsystemBase {
     RR.follow(FR);
     zeroGyroscope();
     m_Odometry = new DifferentialDriveOdometry(m_navx.getRotation2d(), leftDistance(), rightDistance());
+
+    auto1 = PathPlanner.loadPath("auto1", 
+    new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond, AutoConstants.kMaxAccelerationMetersPerSecondSquared));
 
   }
 
@@ -77,7 +87,16 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("gyro yaw", m_navx.getYaw());
     SmartDashboard.putNumber("gyro roll", m_navx.getRoll());
   }
-
+//-----------------------------------------------------------------------------------------------
+ public RamseteAutoBuilder ramAutoBuilder = new RamseteAutoBuilder(
+    this:: getPose2d, 
+    this::resetOdometry, 
+    new RamseteController(), 
+    kDriveKinematics, 
+    this::setMotorsVolts,
+    new HashMap<>(), 
+    true,
+    this);
   // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
 public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
   return new SequentialCommandGroup(

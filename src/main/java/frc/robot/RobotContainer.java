@@ -12,9 +12,6 @@ import frc.robot.commands.Intake.*;
 import frc.robot.subsystems.*;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -36,8 +33,7 @@ public class RobotContainer {
   private final Arm m_Arm = new Arm();
   
   //PATHPLANNER----------------------------------------------------------------------------------
-  private final PathPlannerTrajectory auto1 = PathPlanner.loadPath("Auto1", 
-  new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond, AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+  
   
 
 
@@ -64,8 +60,8 @@ public class RobotContainer {
   m_chooser.addOption("Drive Distance", new DriveDistance(m_Drivetrain, 2.1, -0.15));
   m_chooser.addOption("ConeDrive", new ConeDrive(m_Drivetrain, m_Intake, m_Arm, 2.1));//SHORT SIDE OF TAPE AUTO
   m_chooser.addOption("CubeDrive", new CubeDrive(m_Drivetrain, m_Intake, m_Arm, 2.1));//ON THE SCALE??
-  //m_chooser.addOption("timedauto", new auto1(m_Drivetrain, m_Intake, m_Arm, 2.5));
-  //m_chooser.addOption("pathplannerauto1", new PathplannerAuto(auto1));
+  m_chooser.addOption("PPauto", m_Drivetrain.followTrajectoryCommand(m_Drivetrain.auto1, true));
+  m_chooser.addOption("ppauto2", new PathplannerAuto(m_Drivetrain.auto1));
   SmartDashboard.putData("Autonomous",m_chooser);
   
   //SONGS
