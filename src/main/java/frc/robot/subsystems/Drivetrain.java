@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
-import java.util.HashMap;
 
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
@@ -35,7 +34,6 @@ import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPRamseteCommand;
-import com.pathplanner.lib.auto.RamseteAutoBuilder;
 
 
 
@@ -88,15 +86,6 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("gyro roll", m_navx.getRoll());
   }
 //-----------------------------------------------------------------------------------------------
- public RamseteAutoBuilder ramAutoBuilder = new RamseteAutoBuilder(
-    this:: getPose2d, 
-    this::resetOdometry, 
-    new RamseteController(), 
-    kDriveKinematics, 
-    this::setMotorsVolts,
-    new HashMap<>(), 
-    true,
-    this);
   // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
 public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
   return new SequentialCommandGroup(

@@ -31,6 +31,7 @@ public class RobotContainer {
   private final Drivetrain m_Drivetrain = new Drivetrain();
   private final Intake m_Intake = new Intake();
   private final Arm m_Arm = new Arm();
+  private final OrchestraSub m_Orchestra = new OrchestraSub();
   
   //PATHPLANNER----------------------------------------------------------------------------------
   
@@ -61,7 +62,6 @@ public class RobotContainer {
   m_chooser.addOption("ConeDrive", new ConeDrive(m_Drivetrain, m_Intake, m_Arm, 2.1));//SHORT SIDE OF TAPE AUTO
   m_chooser.addOption("CubeDrive", new CubeDrive(m_Drivetrain, m_Intake, m_Arm, 2.1));//ON THE SCALE??
   m_chooser.addOption("PPauto", m_Drivetrain.followTrajectoryCommand(m_Drivetrain.auto1, true));
-  m_chooser.addOption("ppauto2", new PathplannerAuto(m_Drivetrain.auto1));
   SmartDashboard.putData("Autonomous",m_chooser);
   
   //SONGS
@@ -91,7 +91,8 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    
+    m_opController.leftStick().onTrue(Commands.runOnce(()-> m_Orchestra.LoadMusicSelection(getSong())));
+    m_opController.rightStick().onTrue(Commands.runOnce(()-> m_Orchestra.play()));
     //DRIVE MOVEMENT-------------------------------------------------------------------------------------
     //m_driverController.leftTrigger(0.1).onTrue(new DriveDistance(m_Drivetrain, 1));
     m_driverController.rightTrigger(0.1).whileTrue(new OverDrive());
@@ -100,6 +101,7 @@ public class RobotContainer {
     //INTAKE---------------------------------------------------------------------------------------------
     m_driverController.y().whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerCone));
     m_driverController.x().whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerCube));
+    //m_driverController.y().whileTrue(Commands.run(()->m_Intake.setMotor(-IntakeConstants.intakePowerCone))).whileFalse(Commands.runOnce(()->m_Intake.setMotor(0))); TEST
     m_opController.y().whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerCone));
     m_opController.x().whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerCube));
     //ARM MOVEMENT MANUAL--------------------------------------------------------------------------------
@@ -108,6 +110,7 @@ public class RobotContainer {
     //ARM MOVEMENT PID CONTROLLED -----------------------------------------------------------------------
     m_driverController.leftBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetStowed, ArmConstants.armP));
     m_driverController.rightBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetTopGoal, ArmConstants.armP2));
+    //m_driverController.leftBumper().onTrue(Commands.runOnce(()->m_Arm.setArmPosition(ArmConstants.armSetStowed))); TEST
     m_driverController.a().onTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal, ArmConstants.armP));
     }
 
