@@ -16,7 +16,7 @@ public class ArcadeDrive extends CommandBase {
   private final Supplier<Double> xSpeed, zRotation;
   public double MaxDriveOutput;
   private SlewRateLimiter dLimiter = new SlewRateLimiter(DriveConstants.driveSlewLimit);
-  private SlewRateLimiter tLimiter = new SlewRateLimiter(DriveConstants.turnSlewLimit);
+  //private SlewRateLimiter tLimiter = new SlewRateLimiter(DriveConstants.turnSlewLimit);
   /** Creates a new ArcadeDrive. */
   public ArcadeDrive(Drivetrain m_Drive, Supplier<Double> xSpeed, Supplier<Double> zRotation) {
     // Use addRequirements() here to declare subsystem dependencies.
