@@ -29,7 +29,7 @@ public static class DriveConstants {
   public static final double Deadband = 0.1;
   public static double MaxDriveOutput = 0.5;
   public static double MaxTurnOutput = 0.5;
-  public static final double driveSlewLimit = 4;
+  public static final double driveSlewLimit = 2;
   public static final double turnSlewLimit = 0;
   //MISC DRIVEBASE CONSTANTS
   public static final int Front_Angle_Offset = 0;

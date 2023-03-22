@@ -27,7 +27,7 @@ public class ConeDrive extends SequentialCommandGroup {
     this.m_Arm = m_Arm;
 
     addCommands(
-      new PIDArm(m_Arm, ArmConstants.armSetTopGoal, ArmConstants.armP2).until(()-> m_Arm.isTol()),
+      new PIDArm(m_Arm, ArmConstants.armSetMidGoal, ArmConstants.armP2).until(()-> m_Arm.isTol()),
       Commands.waitSeconds(1),
       Commands.runOnce(()->m_Intake.setMotor(0.6), m_Intake),
       Commands.waitSeconds(1),

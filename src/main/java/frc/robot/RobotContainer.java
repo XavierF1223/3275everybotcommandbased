@@ -60,12 +60,13 @@ public class RobotContainer {
    () -> m_driverController.getRawAxis(4)));
 
   //AUTOS
-  m_chooser.setDefaultOption("Nothing", null);
+  m_chooser.setDefaultOption("ConeDrive", new ConeDrive(m_Drivetrain, m_Intake, m_Arm, 2.1));//SHORT SIDE OF TAPE AUTO
   m_chooser.addOption("Drive Distance", new DriveDistance(m_Drivetrain, 2.1, -0.15));
-  m_chooser.addOption("ConeDrive", new ConeDrive(m_Drivetrain, m_Intake, m_Arm, 2.1));//SHORT SIDE OF TAPE AUTO
+  //m_chooser.addOption("ConeDrive", new ConeDrive(m_Drivetrain, m_Intake, m_Arm, 2.1));//SHORT SIDE OF TAPE AUTO
   m_chooser.addOption("CubeDrive", new CubeDrive(m_Drivetrain, m_Intake, m_Arm, 2.1));//ON THE SCALE??
   //m_chooser.addOption("timedauto", new auto1(m_Drivetrain, m_Intake, m_Arm, 2.5));
   //m_chooser.addOption("pathplannerauto1", new PathplannerAuto(auto1));
+  m_chooser.addOption("Nothing", null);
   SmartDashboard.putData("Autonomous",m_chooser);
   
   //SONGS
@@ -101,6 +102,7 @@ public class RobotContainer {
     m_driverController.rightTrigger(0.1).whileTrue(new OverDrive());
     //m_driverController.leftTrigger(0.1).and(m_driverController.rightTrigger(0.1)).onTrue(new neutralMode(m_Drivetrain, NeutralMode.Brake));
     m_driverController.leftStick().onTrue(Commands.runOnce(() -> m_Drivetrain.neutralMode(NeutralMode.Brake)));
+    m_driverController.rightStick().onTrue(Commands.runOnce(()->m_Drivetrain.neutralMode(NeutralMode.Coast)));
     //INTAKE---------------------------------------------------------------------------------------------
     m_driverController.y().whileTrue(new IntakeCone(m_Intake, -IntakeConstants.intakePowerCone));
     m_driverController.x().whileTrue(new IntakeCone(m_Intake, IntakeConstants.intakePowerCube));
