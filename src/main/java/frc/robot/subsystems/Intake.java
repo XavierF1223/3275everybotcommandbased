@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 
 public class Intake extends SubsystemBase {
   static TalonSRX intakeSRX = new TalonSRX(IntakeConstants.IntakeMotor);

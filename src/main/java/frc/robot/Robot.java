@@ -3,12 +3,14 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import frc.robot.subsystems.*;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,6 +21,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
+  private String Song;
+  private OrchestraSub m_Orchestra;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -63,6 +67,10 @@ public class Robot extends TimedRobot {
     m_robotContainer.resetEncoders();
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    Song = m_robotContainer.getSong();
+    m_Orchestra.LoadMusicSelection(Song);
+    m_Orchestra.play();
+
 
 
     // schedule the autonomous command (example)

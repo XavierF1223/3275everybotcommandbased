@@ -61,14 +61,14 @@ public class RobotContainer {
   m_chooser.addOption("Drive Distance", new DriveDistance(m_Drivetrain, 2.1, -0.15));
   //m_chooser.addOption("ConeDrive", new ConeDrive(m_Drivetrain, m_Intake, m_Arm, 2.1));//SHORT SIDE OF TAPE AUTO
   m_chooser.addOption("CubeDrive", new CubeDrive(m_Drivetrain, m_Intake, m_Arm, 2.1));//ON THE SCALE??
-  m_chooser.addOption("PPauto", m_Drivetrain.followTrajectoryCommand(m_Drivetrain.auto1, true));
+  //m_chooser.addOption("PPauto", m_Drivetrain.followTrajectoryCommand(m_Drivetrain.auto1, true));
   m_chooser.addOption("Nothing", null);
   SmartDashboard.putData("Autonomous",m_chooser);
   
   //SONGS
   m_songChooser.setDefaultOption("Nothing", "");
   m_songChooser.addOption("doom.chrp", "doom.chrp");
-  //SmartDashboard.putData("Song", m_songChooser);
+  SmartDashboard.putData("Song", m_songChooser);
   //m_Orchestra.LoadMusicSelection(getSong());
   }
 

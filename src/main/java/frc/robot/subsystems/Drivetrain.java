@@ -10,6 +10,8 @@ import frc.robot.Constants.DriveConstants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -61,6 +63,10 @@ public class Drivetrain extends SubsystemBase {
     RL.setInverted(false);
     FR.setInverted(false);
     RR.setInverted(false);
+    FL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 60, 70, 1));
+    RL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 60, 70, 1));
+    FR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 60, 70, 1));
+    RR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 60, 70, 1));
     RL.follow(FL);
     RR.follow(FR);
     zeroGyroscope();
@@ -84,8 +90,10 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("gyro pitch", m_navx.getPitch());
     SmartDashboard.putNumber("gyro yaw", m_navx.getYaw());
     SmartDashboard.putNumber("gyro roll", m_navx.getRoll());
+    //SmartDashboard.putNumber("driveamps", FL.s)
   }
 //-----------------------------------------------------------------------------------------------
+/** 
   // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
 public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
   return new SequentialCommandGroup(
@@ -99,17 +107,18 @@ public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFir
           traj, 
           this::getPose2d, // Pose supplier
           new RamseteController(),
-          new SimpleMotorFeedforward(DriveConstants.ksVolts, DriveConstants.kvVoltSecondsPerMeter, DriveConstants.kaVoltSecondsSquaredPerMeter),
+          new SimpleMotorFeedforward(DriveConstants.ks, DriveConstants.kv, DriveConstants.ka),
           this.kDriveKinematics, // DifferentialDriveKinematics
           this::getWheelSpeeds, // DifferentialDriveWheelSpeeds supplier
-          new PIDController(0, 0, 0), // Left controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-          new PIDController(0, 0, 0), // Right controller (usually the same values as left controller)
+          new PIDController(0.01, 0, 0), // Left controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+          new PIDController(0.01, 0, 0), // Right controller (usually the same values as left controller)
           this::setMotorsVolts, // Voltage biconsumer
           true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
           this // Requires this drive subsystem
       )
   );
 }
+*/
 //-----------ODOMETRY BASES----------------------------------------------------------------------------------------------------------------------------------------------------
   public Pose2d getPose2d(){
     return m_Odometry.getPoseMeters();

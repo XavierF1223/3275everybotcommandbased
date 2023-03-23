@@ -35,9 +35,9 @@ public static class DriveConstants {
   public static final int Front_Angle_Offset = 0;
   public static final double driveDistSpd = 0.15;
   //ODOMETRY AND PATHFOLLOWING CONSTANTS GET THESE FROM DRIVEBASE CHARACTERIZATION PROCESS
-  public static final double ksVolts = 0;
-  public static final double kvVoltSecondsPerMeter = 0;
-  public static final double kaVoltSecondsSquaredPerMeter = 0;
+  public static final double ks = 0;
+  public static final double kv = 0;
+  public static final double ka = 0;
   public static final double kPDriveVel = 10;
 
 }
