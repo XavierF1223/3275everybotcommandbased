@@ -5,6 +5,7 @@
 package frc.robot.commands.Arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.Arm;
 
 public class ArmManual extends CommandBase {
@@ -33,6 +34,8 @@ public class ArmManual extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_Arm.setMotor(0);
+    m_Arm.setMotorHold(ArmConstants.armHoldPowerAmps);
+
   }
 
   // Returns true when the command should end.

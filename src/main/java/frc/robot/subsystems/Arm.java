@@ -36,7 +36,7 @@ public class Arm extends SubsystemBase {
     armFx1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 50, 1));
     armFx2.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 50, 1));
 
-    armFx2.setInverted(false);
+    armFx2.setInverted(true);
 
     armConfig.slot0.kP = ArmConstants.armP;
     armConfig.slot0.kI = ArmConstants.armI;

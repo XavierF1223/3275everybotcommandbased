@@ -55,6 +55,7 @@ public class Drivetrain extends SubsystemBase {
   public DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
   public static final double kDefaultMaxOutput = 1.0;
   public PathPlannerTrajectory auto1;
+  final double driveamps = 70;
 
   public Drivetrain() {
     factResetDrive();
@@ -63,18 +64,19 @@ public class Drivetrain extends SubsystemBase {
     RL.setInverted(false);
     FR.setInverted(false);
     RR.setInverted(false);
-    FL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 60, 70, 1));
-    RL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 60, 70, 1));
-    FR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 60, 70, 1));
-    RR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 60, 70, 1));
+    FL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, driveamps, driveamps+5, 1));
+    RL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, driveamps, driveamps+5, 1));
+    FR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, driveamps, driveamps+5, 1));
+    RR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, driveamps, driveamps+5, 1));
     RL.follow(FL);
     RR.follow(FR);
     zeroGyroscope();
+    
     m_Odometry = new DifferentialDriveOdometry(m_navx.getRotation2d(), leftDistance(), rightDistance());
-
+    /** 
     auto1 = PathPlanner.loadPath("auto1", 
     new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond, AutoConstants.kMaxAccelerationMetersPerSecondSquared));
-
+    */
   }
 
   @Override
@@ -90,7 +92,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("gyro pitch", m_navx.getPitch());
     SmartDashboard.putNumber("gyro yaw", m_navx.getYaw());
     SmartDashboard.putNumber("gyro roll", m_navx.getRoll());
-    //SmartDashboard.putNumber("driveamps", FL.s)
+    SmartDashboard.putNumber("driveamps", FL.getStatorCurrent());
   }
 //-----------------------------------------------------------------------------------------------
 /** 
@@ -196,7 +198,10 @@ public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFir
 
   public void setMotors(double left, double right){
     FL.set(ControlMode.PercentOutput, left);
+    RL.set(ControlMode.PercentOutput, left);
     FR.set(ControlMode.PercentOutput, -right);
+    RR.set(ControlMode.PercentOutput, -right);
+
   }
 
   public void setMotorsVolts(double left, double right){ //wtf??

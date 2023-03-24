@@ -17,18 +17,20 @@ public class OrchestraSub extends SubsystemBase {
   Orchestra _orchestra;
 
   TalonFX []_instruments = {
+    /** cant use being called by drivetrain
     new TalonFX(DriveConstants.FL),
     new TalonFX(DriveConstants.FR),
     new TalonFX(DriveConstants.RL),
     new TalonFX(DriveConstants.RR),
+    */
     new TalonFX(ArmConstants.ArmMotorLeft),
     new TalonFX(ArmConstants.ArmMotorRight)};
 
   public String []_songs = new String[]{
-    "doom.chrp",
+    "stayinalive.chrp",
     "feelgood.chrp",
     "heartshapedbox.chrp",
-    "nationalanthem.chrp",
+    "doom.chrp",
     "stayinalive.chrp"
   };
   String _songSelection = "";
@@ -49,11 +51,12 @@ public class OrchestraSub extends SubsystemBase {
   {
       /* increment song selection */
       _songSelection = song;
-      for (int i = 0; i < _songs.length; ++i){
+      for (int i = 4; i < _songs.length; ++i){
         if (_songSelection == _songs[i]){
             _song = i;
           }
       }
+      System.out.println(_songs);
 
       /* load the chirp file */
       _orchestra.loadMusic(_songs[_song]); 
@@ -69,6 +72,10 @@ public class OrchestraSub extends SubsystemBase {
 
   public void play(){
     _orchestra.play();
+  }
+
+  public void stop(){
+    _orchestra.stop();
   }
 
   @Override

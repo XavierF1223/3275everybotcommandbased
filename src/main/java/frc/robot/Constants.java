@@ -58,7 +58,7 @@ public static class ArmConstants {
   public static final double armTol = 0.01;
   public static final int armSetStowed = 1024;//close to 0 but not 0 to avoid OVERDRIVE
   public static final int armSetMidGoal = 30000;
-  public static final int armSetTopGoal = 58800;
+  public static final int armSetTopGoal = 50500;
   
 
 }

@@ -67,10 +67,11 @@ public class Robot extends TimedRobot {
     m_robotContainer.resetEncoders();
 
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    /** 
     Song = m_robotContainer.getSong();
     m_Orchestra.LoadMusicSelection(Song);
     m_Orchestra.play();
-
+    */
 
 
     // schedule the autonomous command (example)

@@ -67,8 +67,12 @@ public class RobotContainer {
   
   //SONGS
   m_songChooser.setDefaultOption("Nothing", "");
-  m_songChooser.addOption("doom.chrp", "doom.chrp");
-  SmartDashboard.putData("Song", m_songChooser);
+  m_songChooser.addOption("doom", "doom.chrp");
+  m_songChooser.addOption("feelgood","feelgood.chrp");
+  m_songChooser.addOption("heartbox","heartshapedbox.chrp");
+  m_songChooser.addOption("nationalanthem","nationalanthem.chrp");
+  m_songChooser.addOption("stayinalive","stayinalive.chrp");
+  //SmartDashboard.putData("Song", m_songChooser);
   //m_Orchestra.LoadMusicSelection(getSong());
   }
 
@@ -94,6 +98,7 @@ public class RobotContainer {
   private void configureBindings() {
     m_opController.leftStick().onTrue(Commands.runOnce(()-> m_Orchestra.LoadMusicSelection(getSong())));
     m_opController.rightStick().onTrue(Commands.runOnce(()-> m_Orchestra.play()));
+    m_opController.rightTrigger(0.1).onTrue(Commands.runOnce(()->m_Orchestra.stop()));
     //DRIVE MOVEMENT-------------------------------------------------------------------------------------
     //m_driverController.leftTrigger(0.1).onTrue(new DriveDistance(m_Drivetrain, 1));
     m_driverController.rightTrigger(0.1).whileTrue(new OverDrive());
@@ -112,7 +117,7 @@ public class RobotContainer {
     //ARM MOVEMENT PID CONTROLLED -----------------------------------------------------------------------
     m_driverController.leftBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetStowed, ArmConstants.armP));
     m_driverController.rightBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetTopGoal, ArmConstants.armP2));
-    //m_driverController.leftBumper().onTrue(Commands.runOnce(()->m_Arm.setArmPosition(ArmConstants.armSetStowed))); TEST
+    m_opController.leftBumper().onTrue(Commands.runOnce(()->m_Arm.setArmPosition(ArmConstants.armSetStowed)));
     m_driverController.a().onTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal, ArmConstants.armP));
     }
 
@@ -130,7 +135,7 @@ public class RobotContainer {
 
   public String getSong() {
     // An example command will be run in autonomous
-    return m_songChooser.toString();
+    return m_songChooser.getSelected();
     
   }
   
