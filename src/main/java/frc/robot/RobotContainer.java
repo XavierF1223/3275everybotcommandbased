@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -96,9 +97,9 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    m_opController.leftStick().onTrue(Commands.runOnce(()-> m_Orchestra.LoadMusicSelection(getSong())));
-    m_opController.rightStick().onTrue(Commands.runOnce(()-> m_Orchestra.play()));
-    m_opController.rightTrigger(0.1).onTrue(Commands.runOnce(()->m_Orchestra.stop()));
+    //m_opController.leftStick().onTrue(Commands.runOnce(()-> m_Orchestra.LoadMusicSelection(getSong())));
+    //m_opController.rightStick().onTrue(Commands.runOnce(()-> m_Orchestra.play()));
+    //m_opController.rightTrigger(0.1).onTrue(Commands.runOnce(()->m_Orchestra.stop()));
     //DRIVE MOVEMENT-------------------------------------------------------------------------------------
     //m_driverController.leftTrigger(0.1).onTrue(new DriveDistance(m_Drivetrain, 1));
     m_driverController.rightTrigger(0.1).whileTrue(new OverDrive());
@@ -119,6 +120,8 @@ public class RobotContainer {
     m_driverController.rightBumper().onTrue(new PIDArm(m_Arm, ArmConstants.armSetTopGoal, ArmConstants.armP2));
     m_opController.leftBumper().onTrue(Commands.runOnce(()->m_Arm.setArmPosition(ArmConstants.armSetStowed)));
     m_driverController.a().onTrue(new PIDArm(m_Arm, ArmConstants.armSetMidGoal, ArmConstants.armP));
+    //POV BUTTONS?!?!?!
+    new POVButton(m_opController.getHID(), 0).onTrue(Commands.runOnce(()->m_Drivetrain.neutralMode(NeutralMode.Coast)));
     }
 
   /**
