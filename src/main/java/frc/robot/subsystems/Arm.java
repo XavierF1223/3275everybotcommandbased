@@ -3,21 +3,25 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems;
+import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 
 public class Arm extends SubsystemBase {
   TalonFX armFx1 = new TalonFX(ArmConstants.ArmMotorLeft);
   TalonFX armFx2 = new TalonFX(ArmConstants.ArmMotorRight);
-  TalonFXConfiguration armConfig = new TalonFXConfiguration();
+  TalonFXConfiguration config = new TalonFXConfiguration();
   DutyCycleEncoder enc = new DutyCycleEncoder(0);
 
   /** Creates a new Arm. */
@@ -25,10 +29,11 @@ public class Arm extends SubsystemBase {
     configure();
   }
   public void configure(){
-    armFx2.follow(armFx1);
-
     armFx1.configFactoryDefault();
     armFx2.configFactoryDefault();
+
+    armFx2.follow(armFx1);
+    armFx2.setInverted(InvertType.FollowMaster);
 
     armFx1.setNeutralMode(NeutralMode.Brake);
     armFx2.setNeutralMode(NeutralMode.Brake);
@@ -36,14 +41,17 @@ public class Arm extends SubsystemBase {
     armFx1.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 50, 1));
     armFx2.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 40, 50, 1));
 
-    armFx2.setInverted(true);
 
-    armConfig.slot0.kP = ArmConstants.armP;
-    armConfig.slot0.kI = ArmConstants.armI;
-    armConfig.slot0.kD = ArmConstants.armD;
-    armConfig.slot0.allowableClosedloopError = ArmConstants.armTol;
-    armConfig.slot0.closedLoopPeakOutput = ArmConstants.armPower;
-    armFx1.configAllSettings(armConfig);
+    armFx1.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 30);
+    armFx1.config_kF(0, 0.05, 30);
+    armFx1.config_kP(0, Constants.ArmConstants.armP, 30);
+    armFx1.config_kI(0, 0, 30);
+    armFx1.config_kD(0, 0, 30);
+    armFx1.configNominalOutputForward(0, 0);
+    armFx1.configNominalOutputReverse(0, 0);
+    armFx1.configPeakOutputForward(1, 0);
+    armFx1.configPeakOutputReverse(-1, 0);
+
   }
 
   /** Returns average encoder ticks */
@@ -73,6 +81,7 @@ public class Arm extends SubsystemBase {
 
   public void setArmPosition(double goal){
     armFx1.set(ControlMode.Position, goal);
+    armFx2.set(ControlMode.Follower, goal);
   }
 
   public void stop(){

@@ -46,6 +46,9 @@ public class Drivetrain extends SubsystemBase {
   private TalonFX FR = new TalonFX(DriveConstants.FR);
   private TalonFX RL = new TalonFX(DriveConstants.RL);
   private TalonFX RR = new TalonFX(DriveConstants.RR);
+
+  private TalonFXConfiguration currentconfig = new TalonFXConfiguration();
+
   private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); // NavX connected over MXP
   private final DifferentialDriveOdometry m_Odometry;
   final int kCountsPerRev = 2048;  //Encoder counts per revolution of the motor shaft.
@@ -59,17 +62,25 @@ public class Drivetrain extends SubsystemBase {
 
   public Drivetrain() {
     factResetDrive();
+    /** 
+    currentconfig.statorCurrLimit.enable = true;
+    currentconfig.statorCurrLimit.currentLimit = driveamps;
+    currentconfig.statorCurrLimit.triggerThresholdCurrent = driveamps+5;
+    currentconfig.statorCurrLimit.triggerThresholdTime = 1;
+    */
+    RL.follow(FL);
+    RR.follow(FR);
     neutralMode(NeutralMode.Coast);
     FL.setInverted(false);
     RL.setInverted(false);
     FR.setInverted(false);
     RR.setInverted(false);
+    //FL.configAllSettings(currentconfig);
     FL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, driveamps, driveamps+5, 1));
     RL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, driveamps, driveamps+5, 1));
     FR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, driveamps, driveamps+5, 1));
     RR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, driveamps, driveamps+5, 1));
-    RL.follow(FL);
-    RR.follow(FR);
+
     zeroGyroscope();
     
     m_Odometry = new DifferentialDriveOdometry(m_navx.getRotation2d(), leftDistance(), rightDistance());
@@ -95,7 +106,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("driveamps", FL.getStatorCurrent());
   }
 //-----------------------------------------------------------------------------------------------
-/** 
+
   // Assuming this method is part of a drivetrain subsystem that provides the necessary methods
 public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
   return new SequentialCommandGroup(
@@ -120,7 +131,7 @@ public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFir
       )
   );
 }
-*/
+
 //-----------ODOMETRY BASES----------------------------------------------------------------------------------------------------------------------------------------------------
   public Pose2d getPose2d(){
     return m_Odometry.getPoseMeters();
