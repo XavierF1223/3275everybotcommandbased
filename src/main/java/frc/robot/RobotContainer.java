@@ -32,7 +32,6 @@ public class RobotContainer {
   private final Drivetrain m_Drivetrain = new Drivetrain();
   private final Intake m_Intake = new Intake();
   private final Arm m_Arm = new Arm();
-  private final OrchestraSub m_Orchestra = new OrchestraSub();
   
   //PATHPLANNER----------------------------------------------------------------------------------
   
